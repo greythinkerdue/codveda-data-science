@@ -1,0 +1,187 @@
+{
+  "overall_rate": 14.49,
+  "total_customers": 3333,
+  "churned_customers": 483,
+  "plan_x_cs": [
+    {
+      "plan": "No",
+      "bucket": "0",
+      "rate": 8.6,
+      "count": 614
+    },
+    {
+      "plan": "No",
+      "bucket": "1",
+      "rate": 7.7,
+      "count": 1069
+    },
+    {
+      "plan": "No",
+      "bucket": "2-3",
+      "rate": 8.5,
+      "count": 1088
+    },
+    {
+      "plan": "No",
+      "bucket": "4+",
+      "rate": 49.8,
+      "count": 239
+    },
+    {
+      "plan": "Yes",
+      "bucket": "0",
+      "rate": 47.0,
+      "count": 83
+    },
+    {
+      "plan": "Yes",
+      "bucket": "1",
+      "rate": 35.7,
+      "count": 112
+    },
+    {
+      "plan": "Yes",
+      "bucket": "2-3",
+      "rate": 39.0,
+      "count": 100
+    },
+    {
+      "plan": "Yes",
+      "bucket": "4+",
+      "rate": 67.9,
+      "count": 28
+    }
+  ],
+  "day_minutes_no_plan": [
+    {
+      "q": "Q1 (low)",
+      "rate": 9.5,
+      "count": 756
+    },
+    {
+      "q": "Q2",
+      "rate": 7.7,
+      "count": 749
+    },
+    {
+      "q": "Q3",
+      "rate": 3.7,
+      "count": 753
+    },
+    {
+      "q": "Q4 (high)",
+      "rate": 25.0,
+      "count": 752
+    }
+  ],
+  "day_minutes_plan": [
+    {
+      "q": "Q1 (low)",
+      "rate": 43.9,
+      "count": 82
+    },
+    {
+      "q": "Q2",
+      "rate": 35.0,
+      "count": 80
+    },
+    {
+      "q": "Q3",
+      "rate": 36.2,
+      "count": 80
+    },
+    {
+      "q": "Q4 (high)",
+      "rate": 54.3,
+      "count": 81
+    }
+  ],
+  "plan_x_vm": [
+    {
+      "plan": "No",
+      "vm": "No",
+      "rate": 13.9,
+      "count": 2180
+    },
+    {
+      "plan": "No",
+      "vm": "Yes",
+      "rate": 5.3,
+      "count": 830
+    },
+    {
+      "plan": "Yes",
+      "vm": "No",
+      "rate": 43.7,
+      "count": 231
+    },
+    {
+      "plan": "Yes",
+      "vm": "Yes",
+      "rate": 39.1,
+      "count": 92
+    }
+  ],
+  "tenure": [
+    {
+      "q": "Q1",
+      "rate": 13.2,
+      "count": 857
+    },
+    {
+      "q": "Q2",
+      "rate": 14.9,
+      "count": 847
+    },
+    {
+      "q": "Q3",
+      "rate": 15.7,
+      "count": 803
+    },
+    {
+      "q": "Q4",
+      "rate": 14.3,
+      "count": 826
+    }
+  ],
+  "charge_gap": [
+    {
+      "Churn": 0,
+      "Total day charge": 29.78,
+      "Total eve charge": 16.92,
+      "Total night charge": 9.01
+    },
+    {
+      "Churn": 1,
+      "Total day charge": 35.18,
+      "Total eve charge": 18.05,
+      "Total night charge": 9.24
+    }
+  ],
+  "models": [
+    {
+      "name": "Random Forest",
+      "accuracy": 94.75,
+      "precision": 91.67,
+      "recall": 69.47,
+      "f1": 79.04,
+      "roc_auc": 92.25
+    },
+    {
+      "name": "Logistic Regression",
+      "accuracy": 77.66,
+      "precision": 36.5,
+      "recall": 76.84,
+      "f1": 49.49,
+      "roc_auc": 81.92
+    },
+    {
+      "name": "Keras MLP (64,32)",
+      "accuracy": 88.91,
+      "precision": 58.97,
+      "recall": 72.63,
+      "f1": 65.09,
+      "roc_auc": 90.39
+    }
+  ]
+}

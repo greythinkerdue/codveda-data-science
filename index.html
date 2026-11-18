@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Codveda Data Science Portfolio</title>
+<meta name="description" content="Churn analytics, housing regression, and NLP sentiment classification — a Codveda Data Science Internship portfolio.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%2314171c%22/><circle cx=%2213%22 cy=%2216%22 r=%227%22 fill=%22%23e0447f%22/><circle cx=%2221%22 cy=%2216%22 r=%227%22 fill=%22%233e9b68%22 fill-opacity=%220.85%22/></svg>">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="brand-mark"></span>Codveda Analytics</a>
+    <ul class="navlinks">
+      <li><a href="index.html" class="active">Overview</a></li>
+      <li><a href="churn-dashboard.html">Churn Dashboard</a></li>
+      <li><a href="housing.html">Housing</a></li>
+      <li><a href="nlp.html">NLP</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="eyebrow">Codveda Data Science Internship &middot; Mar&ndash;Apr 2026</span>
+    <h1>From raw telecom, housing &amp; social data to decisions a business can act on.</h1>
+    <p class="lede">Six tasks across three real-world datasets &mdash; cleaned, modeled, and turned into a churn
+      retention dashboard, a home-value estimator, and a social sentiment triage model. Built to show the full
+      pipeline: data quality, modeling trade-offs, and the business actions each result actually supports.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="churn-dashboard.html">Open the churn dashboard &rarr;</a>
+      <a class="btn btn-ghost" href="notebooks/Codveda_Data_Science_Tasks.ipynb">View notebook</a>
+      <a class="btn btn-ghost" href="reports/Codveda_Data_Science_Results_Report.pdf">Results report (PDF)</a>
+      <a class="btn btn-ghost" href="https://github.com/greythinkerdue/codveda-data-science">GitHub repo</a>
+    </div>
+  </section>
+
+  <section style="margin-top:0;">
+    <div class="situation">
+      <h2>The situation</h2>
+      <p>This portfolio stands in for three analytics requests a data team gets asked to solve:</p>
+      <p><strong>1. A telecom operator</strong> is losing <strong>14.49%</strong> of its subscriber base and
+        wants to know who is at risk and why &mdash; not just a churn score, but a reason a retention team can act on.</p>
+      <p><strong>2. A real-estate desk</strong> wants a quick, explainable estimate of home value from structural
+        and neighborhood features, without relying on a black box.</p>
+      <p><strong>3. A social/brand team</strong> is drowning in unlabeled mentions and wants mentions auto-sorted
+        into positive, negative, and neutral so human reviewers only touch what matters.</p>
+      <p>Each section below answers one of these with real metrics, real trade-offs, and a stated limitation &mdash;
+        not just a chart.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Four models, one pipeline</h2>
+      <p>Data cleaning &amp; EDA, regression, classification, NLP, and a neural network benchmark &mdash; six
+        selected tasks from the Codveda brief, run end-to-end in one notebook.</p>
+    </div>
+    <div class="proj-grid">
+
+      <a class="proj-card" href="churn-dashboard.html">
+        <span class="proj-tag" style="background:var(--pink-soft); color:var(--pink);">Classification &middot; Flagship</span>
+        <h3>Churn retention dashboard</h3>
+        <p>Random Forest flags at-risk subscribers; segment analysis finds three retention levers that customer-service
+          complaint data alone would miss.</p>
+        <div class="proj-metric" style="color:var(--pink);">0.923</div>
+        <div class="proj-metric-label">ROC-AUC, Random Forest</div>
+      </a>
+
+      <a class="proj-card" href="housing.html">
+        <span class="proj-tag" style="background:var(--green-soft); color:var(--green);">Regression</span>
+        <h3>Home value estimator</h3>
+        <p>Three regressors benchmarked on the Boston Housing data; feature importance shows which inputs actually
+          carry predictive weight.</p>
+        <div class="proj-metric" style="color:var(--green);">0.885</div>
+        <div class="proj-metric-label">R&sup2;, Decision Tree</div>
+      </a>
+
+      <a class="proj-card" href="nlp.html">
+        <span class="proj-tag" style="background:var(--gold-soft); color:var(--gold);">NLP &middot; Text classification</span>
+        <h3>Sentiment triage model</h3>
+        <p>TF-IDF + Logistic Regression sorts social posts into polarity classes derived from raw emotion labels, with
+          a documented blind spot on neutral content.</p>
+        <div class="proj-metric" style="color:var(--gold);">76.2%</div>
+        <div class="proj-metric-label">Accuracy, Logistic Regression</div>
+      </a>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Data quality at a glance</h2>
+      <p>What went into the models, before any of the above happened.</p>
+    </div>
+    <div class="card">
+      <table class="data-table">
+        <thead>
+          <tr><th>Dataset</th><th>Rows</th><th>Columns</th><th>Missing cells</th><th>Duplicates</th><th>Cleaning notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="highlight">Telecom churn (80%+20%)</td><td>3,333</td><td>21</td><td>0</td><td>0</td><td>Trimmed categorical strings; converted Churn to 0/1; IQR outliers flagged and retained when plausible.</td></tr>
+          <tr><td class="highlight">Social media sentiment</td><td>732</td><td>15</td><td>0</td><td>22</td><td>Removed exported index columns; trimmed text; parsed timestamps; normalized emotion labels.</td></tr>
+          <tr><td class="highlight">Housing prediction</td><td>506</td><td>14</td><td>0</td><td>0</td><td>Assigned conventional Boston Housing column names to a headerless 14-column file.</td></tr>
+          <tr><td class="highlight">Iris (reference only)</td><td>150</td><td>5</td><td>0</td><td>3</td><td>Duplicate rows removed; not used in the selected modeling tasks.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <span>Codveda Data Science Task Portfolio &middot; built from the supplied Codveda datasets and task list.</span>
+      <span><a href="https://github.com/greythinkerdue/codveda-data-science">Source on GitHub</a> &middot; <a href="reports/Data_Science_Task_List.pdf">Task brief (PDF)</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

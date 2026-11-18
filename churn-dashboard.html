@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Churn Analytics Dashboard &middot; Codveda</title>
+<meta name="description" content="Telecom churn dashboard: segment drivers, model comparison, and recommended retention actions.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%2314171c%22/><circle cx=%2213%22 cy=%2216%22 r=%227%22 fill=%22%23e0447f%22/><circle cx=%2221%22 cy=%2216%22 r=%227%22 fill=%22%233e9b68%22 fill-opacity=%220.85%22/></svg>">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="brand-mark"></span>Codveda Analytics</a>
+    <ul class="navlinks">
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="churn-dashboard.html" class="active">Churn Dashboard</a></li>
+      <li><a href="housing.html">Housing</a></li>
+      <li><a href="nlp.html">NLP</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero" style="padding-bottom:4px;">
+    <span class="eyebrow">Classification &middot; Flagship</span>
+    <h1>Churn Analytics &amp; Retention Dashboard</h1>
+    <p class="lede">3,333 telecom subscribers. A Random Forest classifier flags who is likely to leave &mdash;
+      but the segment analysis below is what tells a retention team <em>why</em>, and which standard playbook moves won't work.</p>
+  </section>
+
+  <section style="margin-top:0;">
+    <div class="situation">
+      <h2>The situation</h2>
+      <p><strong>14.49%</strong> of subscribers churned in the observed period. Customer service is the obvious
+        suspect &mdash; but segmenting churn by plan type, usage tier, and tenure surfaces three drivers a
+        complaint log would never show on its own, plus one common assumption that turns out to be false.
+        Read the four takeaways at the bottom first if you're short on time.</p>
+    </div>
+  </section>
+
+  <section style="margin-top:0;">
+    <div class="kpi-grid">
+      <div class="kpi-tile accent-pink">
+        <div class="kpi-label">Overall churn rate</div>
+        <div class="kpi-value" id="kpi-churn-rate">&mdash;</div>
+        <div class="kpi-sub" id="kpi-churn-sub">&mdash;</div>
+      </div>
+      <div class="kpi-tile accent-gold">
+        <div class="kpi-label">Day-rate bill gap</div>
+        <div class="kpi-value">+$5.40<span style="font-size:15px;color:var(--text-muted);">/mo</span></div>
+        <div class="kpi-sub">Churners pay more on day-rate alone &mdash; evening/night gap is &lt;$1.20</div>
+      </div>
+      <div class="kpi-tile accent-green">
+        <div class="kpi-label">Best model (ROC-AUC)</div>
+        <div class="kpi-value">0.923</div>
+        <div class="kpi-sub">Random Forest, vs. 0.819 for Logistic Regression</div>
+      </div>
+      <div class="kpi-tile accent-pink">
+        <div class="kpi-label">Highest-risk segment</div>
+        <div class="kpi-value">67.9%</div>
+        <div class="kpi-sub">Int'l plan + 4&plus; service calls &mdash; 4.7&times; the base rate</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Segment drivers</h2>
+      <p>Each chart isolates one variable against churn rate. Hover any bar or point for the exact rate and sample size.</p>
+    </div>
+    <div class="grid-2">
+
+      <div class="card">
+        <h3>Churn by service calls &mdash; split by plan</h3>
+        <p class="card-note">International plan customers churn at 35&ndash;68% at every complaint level, including zero complaints.</p>
+        <div class="chart-box"><canvas id="chart-plan-cs"></canvas></div>
+      </div>
+
+      <div class="card">
+        <h3>Churn by daytime usage quartile</h3>
+        <p class="card-note">Not linear: churn dips through Q2&ndash;Q3, then spikes sharply in the heaviest-usage quartile.</p>
+        <div class="chart-box"><canvas id="chart-day-minutes"></canvas></div>
+      </div>
+
+      <div class="card">
+        <h3>Does voicemail bundling reduce churn?</h3>
+        <p class="card-note">Cuts churn nearly in half for standard customers &mdash; barely moves the international-plan segment.</p>
+        <div class="chart-box"><canvas id="chart-vm"></canvas></div>
+      </div>
+
+      <div class="card">
+        <h3>Churn by account tenure</h3>
+        <p class="card-note">Flat across all four tenure quartiles &mdash; "longtime customer" is not a safety signal here.</p>
+        <div class="chart-box"><canvas id="chart-tenure"></canvas></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Model comparison</h2>
+      <p>Three classifiers trained on the same split. Accuracy alone would be misleading on this imbalanced target
+        (14.5% positive class) &mdash; ROC-AUC and recall tell the real story.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>ROC-AUC by model</h3>
+        <p class="card-note">Random Forest separates churn from non-churn best across every threshold.</p>
+        <div class="chart-box"><canvas id="chart-models"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>Full metrics</h3>
+        <p class="card-note">Precision/recall trade-off: Random Forest over-indexes on precision; Logistic Regression catches more true churners but floods the list with false alarms.</p>
+        <table class="data-table" id="model-table">
+          <thead><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>ROC-AUC</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Source evaluation charts</h2>
+      <p>Rendered directly from the trained Random Forest in the notebook.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>ROC curve &mdash; Random Forest</h3>
+        <p class="card-note">Direct from the notebook run &mdash; kept in its original rendering.</p>
+        <div style="background:#fcfcfb; border-radius:10px; padding:14px;">
+          <img src="reports/charts/churn_roc_curve.png" alt="ROC curve for the Random Forest churn model" style="width:100%; display:block; border-radius:4px;">
+        </div>
+      </div>
+      <div class="card">
+        <h3>Confusion matrix &mdash; Random Forest</h3>
+        <p class="card-note">Direct from the notebook run &mdash; kept in its original rendering.</p>
+        <div style="background:#fcfcfb; border-radius:10px; padding:14px;">
+          <img src="reports/charts/churn_random_forest_confusion.png" alt="Confusion matrix for the Random Forest churn model" style="width:100%; display:block; border-radius:4px;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Key takeaways &amp; recommended actions</h2>
+      <p>What a retention team should actually do with this, in priority order.</p>
+    </div>
+    <div class="insight-list">
+
+      <div class="insight">
+        <div class="insight-num">1</div>
+        <div class="insight-body">
+          <h4>The international plan is a pricing problem, not a service problem</h4>
+          <p>Int'l plan customers who <strong>never once called support</strong> still churn at <strong>47.0%</strong> &mdash;
+            vs. 8.6% for non-plan customers with zero complaints. Complaint volume is not an early-warning signal
+            for this segment; dissatisfaction never surfaces as a support ticket.</p>
+          <div class="action-tag"><span class="action-label">Action</span><span>Audit the international plan's pricing and value
+            proposition directly. Don't wait for a complaint-based trigger to flag this segment &mdash; it will stay silent until the customer is gone.</span></div>
+        </div>
+      </div>
+
+      <div class="insight">
+        <div class="insight-num">2</div>
+        <div class="insight-body">
+          <h4>Churn risk has a cliff, not a slope &mdash; and it's specifically a daytime-billing problem</h4>
+          <p>For standard customers, churn <em>falls</em> from 9.5% to 3.7% across the first three usage quartiles, then
+            <strong>jumps to 25.0%</strong> in the heaviest-usage quartile. The billing gap between churners and retained
+            customers is concentrated almost entirely in the day rate (+$5.40/mo) &mdash; evening and night charges differ by
+            under $1.20.</p>
+          <div class="action-tag"><span class="action-label">Action</span><span>Trigger a proactive rate review the moment a
+            customer crosses into the top quartile of daytime usage, instead of a generic "heavy user" retention offer that
+            doesn't target the actual pain point.</span></div>
+        </div>
+      </div>
+
+      <div class="insight">
+        <div class="insight-num">3</div>
+        <div class="insight-body">
+          <h4>The standard retention lever doesn't work on the highest-risk segment</h4>
+          <p>Voicemail bundling nearly halves churn for ordinary customers (13.9% &rarr; 5.3%) but barely moves international-plan
+            customers (43.7% &rarr; 39.1%). Spending retention budget there is close to wasted motion.</p>
+          <div class="action-tag"><span class="action-label">Action</span><span>Exclude international-plan customers from
+            voicemail-bundling campaigns; route them to a plan-specific offer (e.g. a pricing concession) instead.</span></div>
+        </div>
+      </div>
+
+      <div class="insight">
+        <div class="insight-num">4</div>
+        <div class="insight-body">
+          <h4>Tenure is not a safety net &mdash; it debunks a common assumption</h4>
+          <p>Churn rate is essentially flat (13.2%&ndash;15.7%) across every account-length quartile. Customers who have
+            stuck around for years leave just as readily as new signups.</p>
+          <div class="action-tag"><span class="action-label">Action</span><span>Don't let a retention-scoring model down-weight
+            risk just because a customer is "long-tenured" &mdash; weight plan type and usage tier instead, which actually move the needle.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="limitations">
+      <h3>Limitations</h3>
+      <ul>
+        <li>The churn target is imbalanced (14.5% positive) &mdash; accuracy alone is not a reliable model-selection metric here; report F1, recall, and ROC-AUC alongside it.</li>
+        <li>State-level churn disparity exists in the raw data (e.g. CA/NJ/TX near 25% vs. IA/AZ/HI near 6%) but sample sizes per state are small (30&ndash;80 customers) and are not used as a standalone driver here.</li>
+        <li>This is historical, single-snapshot data; no time-series or cohort trend is modeled.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <span>Data: cleaned telecom churn dataset (3,333 rows). Model: Random Forest, scikit-learn.</span>
+      <span><a href="index.html">&larr; Back to overview</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="assets/charts.js"></script>
+<script>
+fetch('assets/data/churn.json').then(r => r.json()).then(d => {
+
+  document.getElementById('kpi-churn-rate').textContent = d.overall_rate + '%';
+  document.getElementById('kpi-churn-sub').textContent = d.churned_customers.toLocaleString() + ' of ' + d.total_customers.toLocaleString() + ' customers';
+
+  // --- Plan x CS calls ---
+  const csBuckets = ['0', '1', '2-3', '4+'];
+  const byPlan = (plan) => csBuckets.map(b => (d.plan_x_cs.find(r => r.plan === plan && r.bucket === b) || {}).rate);
+  renderBarChart('chart-plan-cs', csBuckets.map(b => b + ' calls'), [
+    { label: 'No int\'l plan', data: byPlan('No'), color: COLOR.green },
+    { label: 'Int\'l plan', data: byPlan('Yes'), color: COLOR.pink },
+  ], { ySuffix: '%', tooltipCallbacks: { label: (ctx) => ctx.dataset.label + ': ' + ctx.parsed.y + '%' } });
+
+  // --- Day minutes quartile ---
+  const qs = ['Q1 (low)', 'Q2', 'Q3', 'Q4 (high)'];
+  const noPlanRates = qs.map(q => (d.day_minutes_no_plan.find(r => r.q === q) || {}).rate);
+  const planRates = qs.map(q => (d.day_minutes_plan.find(r => r.q === q) || {}).rate);
+  renderLineChart('chart-day-minutes', qs, [
+    { label: 'No int\'l plan', data: noPlanRates, color: COLOR.green },
+    { label: 'Int\'l plan', data: planRates, color: COLOR.pink },
+  ], { ySuffix: '%', tooltipCallbacks: { label: (ctx) => ctx.dataset.label + ': ' + ctx.parsed.y + '%' } });
+
+  // --- Voicemail x plan ---
+  const planLabels = ['No int\'l plan', 'Int\'l plan'];
+  const vmNo = ['No', 'Yes'].map(p => (d.plan_x_vm.find(r => r.plan === p && r.vm === 'No') || {}).rate);
+  const vmYes = ['No', 'Yes'].map(p => (d.plan_x_vm.find(r => r.plan === p && r.vm === 'Yes') || {}).rate);
+  renderBarChart('chart-vm', planLabels, [
+    { label: 'No voicemail plan', data: vmNo, color: COLOR.pink },
+    { label: 'Has voicemail plan', data: vmYes, color: COLOR.green },
+  ], { ySuffix: '%', tooltipCallbacks: { label: (ctx) => ctx.dataset.label + ': ' + ctx.parsed.y + '%' } });
+
+  // --- Tenure ---
+  renderBarChart('chart-tenure', d.tenure.map(r => r.q), [
+    { label: 'Churn rate', data: d.tenure.map(r => r.rate), color: COLOR.gold },
+  ], { ySuffix: '%', yMax: 30, tooltipCallbacks: { label: (ctx) => 'Churn rate: ' + ctx.parsed.y + '%' } });
+
+  // --- Model comparison ---
+  const modelColors = { 'Random Forest': COLOR.pink, 'Logistic Regression': COLOR.gold, 'Keras MLP (64,32)': COLOR.green };
+  renderBarChart('chart-models', d.models.map(m => m.name), [
+    { label: 'ROC-AUC', data: d.models.map(m => m.roc_auc), color: d.models.map(m => modelColors[m.name]) },
+  ], { ySuffix: '', yMax: 100, tooltipCallbacks: { label: (ctx) => 'ROC-AUC: ' + (ctx.parsed.y / 100).toFixed(3) } });
+
+  const tbody = document.querySelector('#model-table tbody');
+  d.models.forEach(m => {
+    const best = m.name === 'Random Forest';
+    tbody.innerHTML += '<tr>' +
+      '<td class="highlight">' + m.name + (best ? ' <span class="pill pill-good">best</span>' : '') + '</td>' +
+      '<td>' + m.accuracy.toFixed(1) + '%</td>' +
+      '<td>' + m.precision.toFixed(1) + '%</td>' +
+      '<td>' + m.recall.toFixed(1) + '%</td>' +
+      '<td>' + m.f1.toFixed(1) + '%</td>' +
+      '<td class="highlight">' + (m.roc_auc / 100).toFixed(3) + '</td>' +
+      '</tr>';
+  });
+});
+</script>
+</body>
+</html>

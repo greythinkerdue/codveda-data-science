@@ -1,5 +1,7 @@
 # Codveda Data Science Task Portfolio
 
+**Live dashboard: https://greythinkerdue.github.io/codveda-data-science/**
+
 ## Scope
 This portfolio implements six selected tasks from the supplied Codveda Data Science Task List, with the provided datasets.
 
@@ -18,7 +20,7 @@ This portfolio implements six selected tasks from the supplied Codveda Data Scie
 - Housing regression: Decision Tree achieved R² = 0.885 and RMSE = 2.906; Random Forest achieved MAE = 2.077.
 - Churn classification: Random Forest achieved accuracy = 94.75%, precision = 91.67%, recall = 69.47%, F1 = 79.04%, ROC-AUC = 0.923.
 - NLP: Logistic Regression achieved accuracy = 78.23% and macro F1 = 0.687.
-- Neural network: MLP achieved accuracy = 90.55%, F1 = 67.36%, and ROC-AUC = 0.888.
+- Neural network: MLP achieved accuracy = 88.91%, F1 = 65.09%, and ROC-AUC = 0.904.
 
 ## Results at a glance
 ![ROC curve](reports/charts/churn_roc_curve.png)

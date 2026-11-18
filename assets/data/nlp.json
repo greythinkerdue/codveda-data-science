@@ -1,0 +1,33 @@
+{
+  "labels": [
+    "Negative",
+    "Neutral",
+    "Positive"
+  ],
+  "matrix": [
+    [
+      29,
+      4,
+      5
+    ],
+    [
+      4,
+      8,
+      10
+    ],
+    [
+      5,
+      7,
+      75
+    ]
+  ],
+  "accuracy": 76.19,
+  "macro_f1": 66.7,
+  "macro_precision": 67.25,
+  "macro_recall": 66.3,
+  "class_distribution": {
+    "Positive": 434,
+    "Negative": 187,
+    "Neutral": 111
+  }
+}
