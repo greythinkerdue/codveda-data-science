@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>(function(){try{document.documentElement.setAttribute('data-theme', localStorage.getItem('codveda-theme')||'dark');}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sentiment Triage Model &middot; Codveda</title>
 <meta name="description" content="NLP case study: social media sentiment polarity classification with TF-IDF and Logistic Regression.">
@@ -14,30 +15,43 @@
   <div class="wrap">
     <a class="brand" href="index.html"><span class="brand-mark"></span>Codveda Analytics</a>
     <ul class="navlinks">
-      <li><a href="index.html">Overview</a></li>
-      <li><a href="churn-dashboard.html">Churn Dashboard</a></li>
-      <li><a href="housing.html">Housing</a></li>
-      <li><a href="nlp.html" class="active">NLP</a></li>
+      <li><a href="index.html" data-i18n="nav.overview">Overview</a></li>
+      <li><a href="churn-dashboard.html" data-i18n="nav.churn">Churn Dashboard</a></li>
+      <li><a href="housing.html" data-i18n="nav.housing">Housing</a></li>
+      <li><a href="nlp.html" class="active" data-i18n="nav.nlp">NLP</a></li>
     </ul>
+    <div class="nav-controls">
+      <div class="lang-toggle">
+        <button type="button" class="lang-btn" data-lang="id">ID</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle light/dark theme">
+        <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+        <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+      <a class="avatar-link" href="https://github.com/greythinkerdue" target="_blank" rel="noopener" title="greythinkerdue on GitHub">
+        <img src="https://github.com/greythinkerdue.png?size=64" alt="greythinkerdue on GitHub">
+      </a>
+    </div>
   </div>
 </nav>
 
 <div class="wrap">
 
   <section class="hero" style="padding-bottom:4px;">
-    <span class="eyebrow">NLP &middot; Text classification &middot; Case study</span>
-    <h1>Sentiment Triage Model</h1>
-    <p class="lede">Can social posts be auto-sorted into positive/negative/neutral so a brand team only has to
+    <span class="eyebrow" data-i18n="common.tag.nlp">NLP &middot; Text classification &middot; Case study</span>
+    <h1 data-i18n="nlp.h1">Sentiment Triage Model</h1>
+    <p class="lede" data-i18n="nlp.lede">Can social posts be auto-sorted into positive/negative/neutral so a brand team only has to
       review what actually needs a human?</p>
   </section>
 
   <section style="margin-top:0;">
     <div class="situation">
-      <h2>The situation</h2>
-      <p>The source dataset doesn't have a native positive/negative/neutral label &mdash; it has 191 granular emotion
+      <h2 data-i18n="common.situation">The situation</h2>
+      <p data-i18n="nlp.sit.p1">The source dataset doesn't have a native positive/negative/neutral label &mdash; it has 191 granular emotion
         tags ("euphoria," "melancholy," "boredom"...). A documented heuristic grouped those into three polarity
         classes before any model saw the data, so the "ground truth" here is itself an approximation.</p>
-      <p>732 posts, heavily skewed toward positive content (59%). TF-IDF + Logistic Regression was trained to
+      <p data-i18n="nlp.sit.p2">732 posts, heavily skewed toward positive content (59%). TF-IDF + Logistic Regression was trained to
         classify polarity from raw text alone.</p>
     </div>
   </section>
@@ -45,20 +59,20 @@
   <section style="margin-top:0;">
     <div class="kpi-grid">
       <div class="kpi-tile accent-green">
-        <div class="kpi-label">Accuracy</div>
+        <div class="kpi-label" data-i18n="nlp.kpi1.label">Accuracy</div>
         <div class="kpi-value" id="kpi-acc">&mdash;</div>
       </div>
       <div class="kpi-tile accent-gold">
-        <div class="kpi-label">Macro F1</div>
+        <div class="kpi-label" data-i18n="nlp.kpi2.label">Macro F1</div>
         <div class="kpi-value" id="kpi-f1">&mdash;</div>
       </div>
       <div class="kpi-tile accent-pink">
-        <div class="kpi-label">Neutral recall</div>
+        <div class="kpi-label" data-i18n="nlp.kpi3.label">Neutral recall</div>
         <div class="kpi-value" id="kpi-neutral-recall">&mdash;</div>
-        <div class="kpi-sub">vs. 93% for Positive</div>
+        <div class="kpi-sub" data-i18n="nlp.kpi3.sub">vs. 93% for Positive</div>
       </div>
       <div class="kpi-tile">
-        <div class="kpi-label">Class balance</div>
+        <div class="kpi-label" data-i18n="nlp.kpi4.label">Class balance</div>
         <div class="kpi-value" style="font-size:18px;" id="kpi-balance">&mdash;</div>
       </div>
     </div>
@@ -67,13 +81,13 @@
   <section>
     <div class="grid-2">
       <div class="card">
-        <h3>Confusion matrix</h3>
-        <p class="card-note">Rows = actual class, columns = predicted class. Diagonal = correct.</p>
+        <h3 data-i18n="nlp.chart1.h3">Confusion matrix</h3>
+        <p class="card-note" data-i18n="nlp.chart1.note">Rows = actual class, columns = predicted class. Diagonal = correct.</p>
         <div id="cm-wrap"></div>
       </div>
       <div class="card">
-        <h3>Class distribution</h3>
-        <p class="card-note">The heuristic label mapping skews heavily positive &mdash; this shapes what the model learns to expect.</p>
+        <h3 data-i18n="nlp.chart2.h3">Class distribution</h3>
+        <p class="card-note" data-i18n="nlp.chart2.note">The heuristic label mapping skews heavily positive &mdash; this shapes what the model learns to expect.</p>
         <div class="chart-box"><canvas id="chart-dist"></canvas></div>
       </div>
     </div>
@@ -81,18 +95,18 @@
 
   <section>
     <div class="section-head">
-      <h2>Key takeaway &amp; action</h2>
+      <h2 data-i18n="nlp.insights.h2">Key takeaway &amp; action</h2>
     </div>
     <div class="insight-list">
       <div class="insight">
         <div class="insight-num">1</div>
         <div class="insight-body">
-          <h4>Neutral content doesn't get misread as negative &mdash; it gets misread as positive</h4>
-          <p>Of posts actually labeled Neutral, the model calls them <strong>Positive 45% of the time</strong> and
+          <h4 data-i18n="nlp.ins1.h4">Neutral content doesn't get misread as negative &mdash; it gets misread as positive</h4>
+          <p data-i18n="nlp.ins1.p">Of posts actually labeled Neutral, the model calls them <strong>Positive 45% of the time</strong> and
             only identifies them correctly <strong>36% of the time</strong> &mdash; it almost never calls them
             Negative (18%). Because "Neutral" here is a residual bucket from the heuristic label mapping rather than
             a clean linguistic class, the model has learned to default ambiguous text toward the majority class.</p>
-          <div class="action-tag"><span class="action-label">Action</span><span>Don't trust the "Positive" bucket's
+          <div class="action-tag"><span class="action-label" data-i18n="common.action">Action</span><span data-i18n="nlp.ins1.action">Don't trust the "Positive" bucket's
             purity at face value for brand-sentiment reporting &mdash; add a manual-review threshold for
             borderline-confidence positive predictions, since that's exactly where mislabeled neutral content hides
             and would otherwise make sentiment look more favorable than it is.</span></div>
@@ -103,11 +117,11 @@
 
   <section>
     <div class="limitations">
-      <h3>Limitations</h3>
+      <h3 data-i18n="common.limitations">Limitations</h3>
       <ul>
-        <li>Polarity labels are a documented heuristic grouping of 191 emotion tags, not a native ground-truth sentiment label &mdash; results should be read as derived-label text classification, not validated sentiment analysis.</li>
-        <li>732 rows is a small sample for a 3-class text model; the Neutral class alone has only ~111 examples.</li>
-        <li>No evaluation against out-of-distribution text (e.g. a different platform or language) was performed.</li>
+        <li data-i18n="nlp.lim1">Polarity labels are a documented heuristic grouping of 191 emotion tags, not a native ground-truth sentiment label &mdash; results should be read as derived-label text classification, not validated sentiment analysis.</li>
+        <li data-i18n="nlp.lim2">732 rows is a small sample for a 3-class text model; the Neutral class alone has only ~111 examples.</li>
+        <li data-i18n="nlp.lim3">No evaluation against out-of-distribution text (e.g. a different platform or language) was performed.</li>
       </ul>
     </div>
   </section>
@@ -117,8 +131,8 @@
 <footer>
   <div class="wrap">
     <div class="foot-row">
-      <span>Data: social media sentiment dataset (732 rows), TF-IDF + Logistic Regression.</span>
-      <span><a href="index.html">&larr; Back to overview</a></span>
+      <span data-i18n="nlp.footer.left">Data: social media sentiment dataset (732 rows), TF-IDF + Logistic Regression.</span>
+      <span><a href="index.html" data-i18n="common.footer.back">&larr; Back to overview</a></span>
     </div>
   </div>
 </footer>
@@ -126,6 +140,13 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="assets/charts.js"></script>
 <script>
+const T = {
+  en: { pred: 'Pred', actual: 'Actual', posts: 'posts', Positive: 'Positive', Negative: 'Negative', Neutral: 'Neutral' },
+  id: { pred: 'Prediksi', actual: 'Aktual', posts: 'postingan', Positive: 'Positif', Negative: 'Negatif', Neutral: 'Netral' },
+};
+let curLang = (function () { try { return localStorage.getItem('codveda-lang') || 'en'; } catch (e) { return 'en'; } })();
+document.addEventListener('codveda:langchange', (e) => { curLang = e.detail.lang; if (window.__renderNLP) window.__renderNLP(); });
+
 fetch('assets/data/nlp.json').then(r => r.json()).then(d => {
 
   document.getElementById('kpi-acc').textContent = d.accuracy.toFixed(1) + '%';
@@ -143,46 +164,52 @@ fetch('assets/data/nlp.json').then(r => r.json()).then(d => {
     Math.round(d.class_distribution.Negative / total * 100) + '% / ' +
     Math.round(d.class_distribution.Neutral / total * 100) + '%';
 
-  // --- Confusion matrix grid ---
-  const wrap = document.getElementById('cm-wrap');
-  const grid = document.createElement('div');
-  grid.className = 'cm-grid';
-  grid.style.gridTemplateColumns = '90px repeat(' + labels.length + ', 1fr)';
-  grid.appendChild(Object.assign(document.createElement('div'), { className: 'cm-label' }));
-  labels.forEach(l => {
-    const c = document.createElement('div');
-    c.className = 'cm-label';
-    c.textContent = 'Pred: ' + l;
-    grid.appendChild(c);
-  });
-  d.matrix.forEach((row, ri) => {
-    const rowLabel = document.createElement('div');
-    rowLabel.className = 'cm-label';
-    rowLabel.textContent = 'Actual: ' + labels[ri];
-    grid.appendChild(rowLabel);
-    const rowTotal = row.reduce((a, b) => a + b, 0);
-    row.forEach((v, ci) => {
-      const cell = document.createElement('div');
-      cell.className = 'cm-cell';
-      const intensity = v / rowTotal;
-      if (ri === ci) {
-        cell.style.background = `rgba(62,155,104,${0.25 + intensity * 0.6})`;
-      } else {
-        cell.style.background = `rgba(224,68,127,${0.08 + intensity * 0.5})`;
-      }
-      cell.style.color = intensity > 0.45 ? '#0a0d10' : '#f5f7f6';
-      cell.innerHTML = v + '<br><span style="font-weight:400;opacity:.75;font-size:11px;">' + (intensity * 100).toFixed(0) + '%</span>';
-      grid.appendChild(cell);
+  window.__renderNLP = () => {
+    // --- Confusion matrix grid ---
+    const wrap = document.getElementById('cm-wrap');
+    wrap.innerHTML = '';
+    const grid = document.createElement('div');
+    grid.className = 'cm-grid';
+    grid.style.gridTemplateColumns = '90px repeat(' + labels.length + ', 1fr)';
+    grid.appendChild(Object.assign(document.createElement('div'), { className: 'cm-label' }));
+    labels.forEach(l => {
+      const c = document.createElement('div');
+      c.className = 'cm-label';
+      c.textContent = T[curLang].pred + ': ' + T[curLang][l];
+      grid.appendChild(c);
     });
-  });
-  wrap.appendChild(grid);
+    d.matrix.forEach((row, ri) => {
+      const rowLabel = document.createElement('div');
+      rowLabel.className = 'cm-label';
+      rowLabel.textContent = T[curLang].actual + ': ' + T[curLang][labels[ri]];
+      grid.appendChild(rowLabel);
+      const rowTotal = row.reduce((a, b) => a + b, 0);
+      row.forEach((v, ci) => {
+        const cell = document.createElement('div');
+        cell.className = 'cm-cell';
+        const intensity = v / rowTotal;
+        if (ri === ci) {
+          cell.style.background = `rgba(62,155,104,${0.25 + intensity * 0.6})`;
+        } else {
+          cell.style.background = `rgba(224,68,127,${0.08 + intensity * 0.5})`;
+        }
+        cell.style.color = intensity > 0.4 ? '#ffffff' : 'var(--text-primary)';
+        cell.innerHTML = v + '<br><span style="font-weight:400;opacity:.75;font-size:11px;">' + (intensity * 100).toFixed(0) + '%</span>';
+        grid.appendChild(cell);
+      });
+    });
+    wrap.appendChild(grid);
 
-  // --- Class distribution chart ---
-  const distLabels = ['Positive', 'Negative', 'Neutral'];
-  renderBarChart('chart-dist', distLabels, [
-    { label: 'Posts', data: distLabels.map(l => d.class_distribution[l]), color: [COLOR.green, COLOR.pink, COLOR.gold] },
-  ], { tooltipCallbacks: { label: (ctx) => ctx.parsed.y + ' posts' } });
+    // --- Class distribution chart ---
+    const distLabels = ['Positive', 'Negative', 'Neutral'];
+    renderBarChart('chart-dist', distLabels.map(l => T[curLang][l]), [
+      { label: T[curLang].posts, data: distLabels.map(l => d.class_distribution[l]), color: [COLOR.green, COLOR.pink, COLOR.gold] },
+    ], { tooltipCallbacks: { label: (ctx) => ctx.parsed.y + ' ' + T[curLang].posts } });
+  };
+  window.__renderNLP();
 });
 </script>
+<script src="assets/i18n-data.js"></script>
+<script src="assets/controls.js"></script>
 </body>
 </html>

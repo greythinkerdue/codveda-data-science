@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>(function(){try{document.documentElement.setAttribute('data-theme', localStorage.getItem('codveda-theme')||'dark');}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Churn Analytics Dashboard &middot; Codveda</title>
 <meta name="description" content="Telecom churn dashboard: segment drivers, model comparison, and recommended retention actions.">
@@ -14,27 +15,40 @@
   <div class="wrap">
     <a class="brand" href="index.html"><span class="brand-mark"></span>Codveda Analytics</a>
     <ul class="navlinks">
-      <li><a href="index.html">Overview</a></li>
-      <li><a href="churn-dashboard.html" class="active">Churn Dashboard</a></li>
-      <li><a href="housing.html">Housing</a></li>
-      <li><a href="nlp.html">NLP</a></li>
+      <li><a href="index.html" data-i18n="nav.overview">Overview</a></li>
+      <li><a href="churn-dashboard.html" class="active" data-i18n="nav.churn">Churn Dashboard</a></li>
+      <li><a href="housing.html" data-i18n="nav.housing">Housing</a></li>
+      <li><a href="nlp.html" data-i18n="nav.nlp">NLP</a></li>
     </ul>
+    <div class="nav-controls">
+      <div class="lang-toggle">
+        <button type="button" class="lang-btn" data-lang="id">ID</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle light/dark theme">
+        <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+        <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+      <a class="avatar-link" href="https://github.com/greythinkerdue" target="_blank" rel="noopener" title="greythinkerdue on GitHub">
+        <img src="https://github.com/greythinkerdue.png?size=64" alt="greythinkerdue on GitHub">
+      </a>
+    </div>
   </div>
 </nav>
 
 <div class="wrap">
 
   <section class="hero" style="padding-bottom:4px;">
-    <span class="eyebrow">Classification &middot; Flagship</span>
-    <h1>Churn Analytics &amp; Retention Dashboard</h1>
-    <p class="lede">3,333 telecom subscribers. A Random Forest classifier flags who is likely to leave &mdash;
+    <span class="eyebrow" data-i18n="common.tag.classification">Classification</span>
+    <h1 data-i18n="churn.h1">Churn Analytics &amp; Retention Dashboard</h1>
+    <p class="lede" data-i18n="churn.lede">3,333 telecom subscribers. A Random Forest classifier flags who is likely to leave &mdash;
       but the segment analysis below is what tells a retention team <em>why</em>, and which standard playbook moves won't work.</p>
   </section>
 
   <section style="margin-top:0;">
     <div class="situation">
-      <h2>The situation</h2>
-      <p><strong>14.49%</strong> of subscribers churned in the observed period. Customer service is the obvious
+      <h2 data-i18n="common.situation">The situation</h2>
+      <p data-i18n="churn.sit.p"><strong>14.49%</strong> of subscribers churned in the observed period. Customer service is the obvious
         suspect &mdash; but segmenting churn by plan type, usage tier, and tenure surfaces three drivers a
         complaint log would never show on its own, plus one common assumption that turns out to be false.
         Read the four takeaways at the bottom first if you're short on time.</p>
@@ -44,56 +58,97 @@
   <section style="margin-top:0;">
     <div class="kpi-grid">
       <div class="kpi-tile accent-pink">
-        <div class="kpi-label">Overall churn rate</div>
+        <div class="kpi-label" data-i18n="churn.kpi1.label">Overall churn rate</div>
         <div class="kpi-value" id="kpi-churn-rate">&mdash;</div>
         <div class="kpi-sub" id="kpi-churn-sub">&mdash;</div>
       </div>
       <div class="kpi-tile accent-gold">
-        <div class="kpi-label">Day-rate bill gap</div>
+        <div class="kpi-label" data-i18n="churn.kpi2.label">Day-rate bill gap</div>
         <div class="kpi-value">+$5.40<span style="font-size:15px;color:var(--text-muted);">/mo</span></div>
-        <div class="kpi-sub">Churners pay more on day-rate alone &mdash; evening/night gap is &lt;$1.20</div>
+        <div class="kpi-sub" data-i18n="churn.kpi2.sub">Churners pay more on day-rate alone &mdash; evening/night gap is &lt;$1.20</div>
       </div>
       <div class="kpi-tile accent-green">
-        <div class="kpi-label">Best model (ROC-AUC)</div>
+        <div class="kpi-label" data-i18n="churn.kpi3.label">Best model (ROC-AUC)</div>
         <div class="kpi-value">0.923</div>
-        <div class="kpi-sub">Random Forest, vs. 0.819 for Logistic Regression</div>
+        <div class="kpi-sub" data-i18n="churn.kpi3.sub">Random Forest, vs. 0.819 for Logistic Regression</div>
       </div>
       <div class="kpi-tile accent-pink">
-        <div class="kpi-label">Highest-risk segment</div>
+        <div class="kpi-label" data-i18n="churn.kpi4.label">Highest-risk segment</div>
         <div class="kpi-value">67.9%</div>
-        <div class="kpi-sub">Int'l plan + 4&plus; service calls &mdash; 4.7&times; the base rate</div>
+        <div class="kpi-sub" data-i18n="churn.kpi4.sub">Int'l plan + 4&plus; service calls &mdash; 4.7&times; the base rate</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <span class="eyebrow" style="margin-bottom:12px;" data-i18n="common.try">Try it yourself</span>
+      <h3 style="font-size:19px; margin-bottom:4px;" data-i18n="churn.est.h3">Estimate a subscriber's churn risk</h3>
+      <p class="card-note" data-i18n="churn.est.p">Drag the controls to build a customer profile. The estimate is read directly from the real segment rates charted below &mdash; not a black box.</p>
+      <div class="estimator-grid">
+        <div class="estimator-controls">
+          <div class="control-row">
+            <label data-i18n="churn.est.plan_label">International plan</label>
+            <div class="toggle-pair" data-control="plan">
+              <button type="button" data-value="No" class="toggle-opt active" data-i18n="common.no">No</button>
+              <button type="button" data-value="Yes" class="toggle-opt" data-i18n="common.yes">Yes</button>
+            </div>
+          </div>
+          <div class="control-row">
+            <label data-i18n="churn.est.vm_label">Voicemail plan</label>
+            <div class="toggle-pair" data-control="vm">
+              <button type="button" data-value="No" class="toggle-opt active" data-i18n="common.no">No</button>
+              <button type="button" data-value="Yes" class="toggle-opt" data-i18n="common.yes">Yes</button>
+            </div>
+          </div>
+          <div class="control-row">
+            <label><span data-i18n="churn.est.cs_label">Customer service calls:</span> <span id="cs-val">1</span></label>
+            <input type="range" id="cs-slider" min="0" max="6" value="1" step="1">
+          </div>
+          <div class="control-row">
+            <label><span data-i18n="churn.est.min_label">Total day minutes:</span> <span id="min-val">180</span></label>
+            <input type="range" id="min-slider" min="0" max="350" value="180" step="5">
+          </div>
+        </div>
+        <div class="estimator-result">
+          <div class="risk-badge" id="risk-badge">
+            <div class="risk-pct" id="risk-pct">&mdash;</div>
+            <div class="risk-label" id="risk-label">&mdash;</div>
+          </div>
+          <p class="risk-explain" id="risk-explain"></p>
+        </div>
       </div>
     </div>
   </section>
 
   <section>
     <div class="section-head">
-      <h2>Segment drivers</h2>
-      <p>Each chart isolates one variable against churn rate. Hover any bar or point for the exact rate and sample size.</p>
+      <h2 data-i18n="churn.drivers.h2">Segment drivers</h2>
+      <p data-i18n="churn.drivers.p">Each chart isolates one variable against churn rate. Hover any bar or point for the exact rate and sample size.</p>
     </div>
     <div class="grid-2">
 
       <div class="card">
-        <h3>Churn by service calls &mdash; split by plan</h3>
-        <p class="card-note">International plan customers churn at 35&ndash;68% at every complaint level, including zero complaints.</p>
+        <h3 data-i18n="churn.chart1.h3">Churn by service calls &mdash; split by plan</h3>
+        <p class="card-note" data-i18n="churn.chart1.note">International plan customers churn at 35&ndash;68% at every complaint level, including zero complaints.</p>
         <div class="chart-box"><canvas id="chart-plan-cs"></canvas></div>
       </div>
 
       <div class="card">
-        <h3>Churn by daytime usage quartile</h3>
-        <p class="card-note">Not linear: churn dips through Q2&ndash;Q3, then spikes sharply in the heaviest-usage quartile.</p>
+        <h3 data-i18n="churn.chart2.h3">Churn by daytime usage quartile</h3>
+        <p class="card-note" data-i18n="churn.chart2.note">Not linear: churn dips through Q2&ndash;Q3, then spikes sharply in the heaviest-usage quartile.</p>
         <div class="chart-box"><canvas id="chart-day-minutes"></canvas></div>
       </div>
 
       <div class="card">
-        <h3>Does voicemail bundling reduce churn?</h3>
-        <p class="card-note">Cuts churn nearly in half for standard customers &mdash; barely moves the international-plan segment.</p>
+        <h3 data-i18n="churn.chart3.h3">Does voicemail bundling reduce churn?</h3>
+        <p class="card-note" data-i18n="churn.chart3.note">Cuts churn nearly in half for standard customers &mdash; barely moves the international-plan segment.</p>
         <div class="chart-box"><canvas id="chart-vm"></canvas></div>
       </div>
 
       <div class="card">
-        <h3>Churn by account tenure</h3>
-        <p class="card-note">Flat across all four tenure quartiles &mdash; "longtime customer" is not a safety signal here.</p>
+        <h3 data-i18n="churn.chart4.h3">Churn by account tenure</h3>
+        <p class="card-note" data-i18n="churn.chart4.note">Flat across all four tenure quartiles &mdash; "longtime customer" is not a safety signal here.</p>
         <div class="chart-box"><canvas id="chart-tenure"></canvas></div>
       </div>
 
@@ -102,21 +157,28 @@
 
   <section>
     <div class="section-head">
-      <h2>Model comparison</h2>
-      <p>Three classifiers trained on the same split. Accuracy alone would be misleading on this imbalanced target
+      <h2 data-i18n="churn.models.h2">Model comparison</h2>
+      <p data-i18n="churn.models.p">Three classifiers trained on the same split. Accuracy alone would be misleading on this imbalanced target
         (14.5% positive class) &mdash; ROC-AUC and recall tell the real story.</p>
     </div>
     <div class="grid-2">
       <div class="card">
-        <h3>ROC-AUC by model</h3>
-        <p class="card-note">Random Forest separates churn from non-churn best across every threshold.</p>
+        <h3 data-i18n="churn.chart5.h3">ROC-AUC by model</h3>
+        <p class="card-note" data-i18n="churn.chart5.note">Random Forest separates churn from non-churn best across every threshold.</p>
         <div class="chart-box"><canvas id="chart-models"></canvas></div>
       </div>
       <div class="card">
-        <h3>Full metrics</h3>
-        <p class="card-note">Precision/recall trade-off: Random Forest over-indexes on precision; Logistic Regression catches more true churners but floods the list with false alarms.</p>
+        <h3 data-i18n="churn.table.h3">Full metrics</h3>
+        <p class="card-note" data-i18n="churn.table.note">Precision/recall trade-off: Random Forest over-indexes on precision; Logistic Regression catches more true churners but floods the list with false alarms.</p>
         <table class="data-table" id="model-table">
-          <thead><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>ROC-AUC</th></tr></thead>
+          <thead><tr>
+            <th data-i18n="churn.table.th.model">Model</th>
+            <th data-i18n="churn.table.th.acc">Accuracy</th>
+            <th data-i18n="churn.table.th.prec">Precision</th>
+            <th data-i18n="churn.table.th.rec">Recall</th>
+            <th data-i18n="churn.table.th.f1">F1</th>
+            <th data-i18n="churn.table.th.roc">ROC-AUC</th>
+          </tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -125,20 +187,20 @@
 
   <section>
     <div class="section-head">
-      <h2>Source evaluation charts</h2>
-      <p>Rendered directly from the trained Random Forest in the notebook.</p>
+      <h2 data-i18n="churn.source.h2">Source evaluation charts</h2>
+      <p data-i18n="churn.source.p">Rendered directly from the trained Random Forest in the notebook.</p>
     </div>
     <div class="grid-2">
       <div class="card">
-        <h3>ROC curve &mdash; Random Forest</h3>
-        <p class="card-note">Direct from the notebook run &mdash; kept in its original rendering.</p>
+        <h3 data-i18n="churn.source.roc.h3">ROC curve &mdash; Random Forest</h3>
+        <p class="card-note" data-i18n="churn.source.note">Direct from the notebook run &mdash; kept in its original rendering.</p>
         <div style="background:#fcfcfb; border-radius:10px; padding:14px;">
           <img src="reports/charts/churn_roc_curve.png" alt="ROC curve for the Random Forest churn model" style="width:100%; display:block; border-radius:4px;">
         </div>
       </div>
       <div class="card">
-        <h3>Confusion matrix &mdash; Random Forest</h3>
-        <p class="card-note">Direct from the notebook run &mdash; kept in its original rendering.</p>
+        <h3 data-i18n="churn.source.cm.h3">Confusion matrix &mdash; Random Forest</h3>
+        <p class="card-note" data-i18n="churn.source.note">Direct from the notebook run &mdash; kept in its original rendering.</p>
         <div style="background:#fcfcfb; border-radius:10px; padding:14px;">
           <img src="reports/charts/churn_random_forest_confusion.png" alt="Confusion matrix for the Random Forest churn model" style="width:100%; display:block; border-radius:4px;">
         </div>
@@ -148,19 +210,19 @@
 
   <section>
     <div class="section-head">
-      <h2>Key takeaways &amp; recommended actions</h2>
-      <p>What a retention team should actually do with this, in priority order.</p>
+      <h2 data-i18n="churn.insights.h2">Key takeaways &amp; recommended actions</h2>
+      <p data-i18n="churn.insights.p">What a retention team should actually do with this, in priority order.</p>
     </div>
     <div class="insight-list">
 
       <div class="insight">
         <div class="insight-num">1</div>
         <div class="insight-body">
-          <h4>The international plan is a pricing problem, not a service problem</h4>
-          <p>Int'l plan customers who <strong>never once called support</strong> still churn at <strong>47.0%</strong> &mdash;
+          <h4 data-i18n="churn.ins1.h4">The international plan is a pricing problem, not a service problem</h4>
+          <p data-i18n="churn.ins1.p">Int'l plan customers who <strong>never once called support</strong> still churn at <strong>47.0%</strong> &mdash;
             vs. 8.6% for non-plan customers with zero complaints. Complaint volume is not an early-warning signal
             for this segment; dissatisfaction never surfaces as a support ticket.</p>
-          <div class="action-tag"><span class="action-label">Action</span><span>Audit the international plan's pricing and value
+          <div class="action-tag"><span class="action-label" data-i18n="common.action">Action</span><span data-i18n="churn.ins1.action">Audit the international plan's pricing and value
             proposition directly. Don't wait for a complaint-based trigger to flag this segment &mdash; it will stay silent until the customer is gone.</span></div>
         </div>
       </div>
@@ -168,12 +230,12 @@
       <div class="insight">
         <div class="insight-num">2</div>
         <div class="insight-body">
-          <h4>Churn risk has a cliff, not a slope &mdash; and it's specifically a daytime-billing problem</h4>
-          <p>For standard customers, churn <em>falls</em> from 9.5% to 3.7% across the first three usage quartiles, then
+          <h4 data-i18n="churn.ins2.h4">Churn risk has a cliff, not a slope &mdash; and it's specifically a daytime-billing problem</h4>
+          <p data-i18n="churn.ins2.p">For standard customers, churn <em>falls</em> from 9.5% to 3.7% across the first three usage quartiles, then
             <strong>jumps to 25.0%</strong> in the heaviest-usage quartile. The billing gap between churners and retained
             customers is concentrated almost entirely in the day rate (+$5.40/mo) &mdash; evening and night charges differ by
             under $1.20.</p>
-          <div class="action-tag"><span class="action-label">Action</span><span>Trigger a proactive rate review the moment a
+          <div class="action-tag"><span class="action-label" data-i18n="common.action">Action</span><span data-i18n="churn.ins2.action">Trigger a proactive rate review the moment a
             customer crosses into the top quartile of daytime usage, instead of a generic "heavy user" retention offer that
             doesn't target the actual pain point.</span></div>
         </div>
@@ -182,10 +244,10 @@
       <div class="insight">
         <div class="insight-num">3</div>
         <div class="insight-body">
-          <h4>The standard retention lever doesn't work on the highest-risk segment</h4>
-          <p>Voicemail bundling nearly halves churn for ordinary customers (13.9% &rarr; 5.3%) but barely moves international-plan
+          <h4 data-i18n="churn.ins3.h4">The standard retention lever doesn't work on the highest-risk segment</h4>
+          <p data-i18n="churn.ins3.p">Voicemail bundling nearly halves churn for ordinary customers (13.9% &rarr; 5.3%) but barely moves international-plan
             customers (43.7% &rarr; 39.1%). Spending retention budget there is close to wasted motion.</p>
-          <div class="action-tag"><span class="action-label">Action</span><span>Exclude international-plan customers from
+          <div class="action-tag"><span class="action-label" data-i18n="common.action">Action</span><span data-i18n="churn.ins3.action">Exclude international-plan customers from
             voicemail-bundling campaigns; route them to a plan-specific offer (e.g. a pricing concession) instead.</span></div>
         </div>
       </div>
@@ -193,10 +255,10 @@
       <div class="insight">
         <div class="insight-num">4</div>
         <div class="insight-body">
-          <h4>Tenure is not a safety net &mdash; it debunks a common assumption</h4>
-          <p>Churn rate is essentially flat (13.2%&ndash;15.7%) across every account-length quartile. Customers who have
+          <h4 data-i18n="churn.ins4.h4">Tenure is not a safety net &mdash; it debunks a common assumption</h4>
+          <p data-i18n="churn.ins4.p">Churn rate is essentially flat (13.2%&ndash;15.7%) across every account-length quartile. Customers who have
             stuck around for years leave just as readily as new signups.</p>
-          <div class="action-tag"><span class="action-label">Action</span><span>Don't let a retention-scoring model down-weight
+          <div class="action-tag"><span class="action-label" data-i18n="common.action">Action</span><span data-i18n="churn.ins4.action">Don't let a retention-scoring model down-weight
             risk just because a customer is "long-tenured" &mdash; weight plan type and usage tier instead, which actually move the needle.</span></div>
         </div>
       </div>
@@ -206,11 +268,11 @@
 
   <section>
     <div class="limitations">
-      <h3>Limitations</h3>
+      <h3 data-i18n="common.limitations">Limitations</h3>
       <ul>
-        <li>The churn target is imbalanced (14.5% positive) &mdash; accuracy alone is not a reliable model-selection metric here; report F1, recall, and ROC-AUC alongside it.</li>
-        <li>State-level churn disparity exists in the raw data (e.g. CA/NJ/TX near 25% vs. IA/AZ/HI near 6%) but sample sizes per state are small (30&ndash;80 customers) and are not used as a standalone driver here.</li>
-        <li>This is historical, single-snapshot data; no time-series or cohort trend is modeled.</li>
+        <li data-i18n="churn.lim1">The churn target is imbalanced (14.5% positive) &mdash; accuracy alone is not a reliable model-selection metric here; report F1, recall, and ROC-AUC alongside it.</li>
+        <li data-i18n="churn.lim2">State-level churn disparity exists in the raw data (e.g. CA/NJ/TX near 25% vs. IA/AZ/HI near 6%) but sample sizes per state are small (30&ndash;80 customers) and are not used as a standalone driver here.</li>
+        <li data-i18n="churn.lim3">This is historical, single-snapshot data; no time-series or cohort trend is modeled.</li>
       </ul>
     </div>
   </section>
@@ -220,8 +282,8 @@
 <footer>
   <div class="wrap">
     <div class="foot-row">
-      <span>Data: cleaned telecom churn dataset (3,333 rows). Model: Random Forest, scikit-learn.</span>
-      <span><a href="index.html">&larr; Back to overview</a></span>
+      <span data-i18n="churn.footer.left">Data: cleaned telecom churn dataset (3,333 rows). Model: Random Forest, scikit-learn.</span>
+      <span><a href="index.html" data-i18n="common.footer.back">&larr; Back to overview</a></span>
     </div>
   </div>
 </footer>
@@ -229,10 +291,29 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="assets/charts.js"></script>
 <script>
+const T = {
+  en: { low: 'Low risk', medium: 'Medium risk', high: 'High risk', best: 'best',
+    of: (a, b) => a + ' of ' + b + ' customers',
+    driver: (name, rate) => 'Strongest matching driver: ' + name + ' — that segment churns at ' + rate.toFixed(1) + '% in the real data.' },
+  id: { low: 'Risiko rendah', medium: 'Risiko sedang', high: 'Risiko tinggi', best: 'terbaik',
+    of: (a, b) => a + ' dari ' + b + ' pelanggan',
+    driver: (name, rate) => 'Faktor paling cocok: ' + name + ' — segmen ini churn ' + rate.toFixed(1) + '% pada data asli.' },
+};
+let curLang = (function () { try { return localStorage.getItem('codveda-lang') || 'en'; } catch (e) { return 'en'; } })();
+document.addEventListener('codveda:langchange', (e) => {
+  curLang = e.detail.lang;
+  if (window.__updateEstimator) window.__updateEstimator();
+  if (window.__renderModelTable) window.__renderModelTable();
+  if (window.__renderKpiSub) window.__renderKpiSub();
+});
+
 fetch('assets/data/churn.json').then(r => r.json()).then(d => {
 
   document.getElementById('kpi-churn-rate').textContent = d.overall_rate + '%';
-  document.getElementById('kpi-churn-sub').textContent = d.churned_customers.toLocaleString() + ' of ' + d.total_customers.toLocaleString() + ' customers';
+  window.__renderKpiSub = () => {
+    document.getElementById('kpi-churn-sub').textContent = T[curLang].of(d.churned_customers.toLocaleString(), d.total_customers.toLocaleString());
+  };
+  window.__renderKpiSub();
 
   // --- Plan x CS calls ---
   const csBuckets = ['0', '1', '2-3', '4+'];
@@ -271,19 +352,91 @@ fetch('assets/data/churn.json').then(r => r.json()).then(d => {
     { label: 'ROC-AUC', data: d.models.map(m => m.roc_auc), color: d.models.map(m => modelColors[m.name]) },
   ], { ySuffix: '', yMax: 100, tooltipCallbacks: { label: (ctx) => 'ROC-AUC: ' + (ctx.parsed.y / 100).toFixed(3) } });
 
-  const tbody = document.querySelector('#model-table tbody');
-  d.models.forEach(m => {
-    const best = m.name === 'Random Forest';
-    tbody.innerHTML += '<tr>' +
-      '<td class="highlight">' + m.name + (best ? ' <span class="pill pill-good">best</span>' : '') + '</td>' +
-      '<td>' + m.accuracy.toFixed(1) + '%</td>' +
-      '<td>' + m.precision.toFixed(1) + '%</td>' +
-      '<td>' + m.recall.toFixed(1) + '%</td>' +
-      '<td>' + m.f1.toFixed(1) + '%</td>' +
-      '<td class="highlight">' + (m.roc_auc / 100).toFixed(3) + '</td>' +
-      '</tr>';
+  // --- Interactive churn risk estimator ---
+  const noPlanBins = [-0.001, 143.3, 179.0, 214.9, 350.8];
+  const planBins = [12.499, 148.2, 188.9, 228.65, 346.8];
+  const qLabels = ['Q1 (low)', 'Q2', 'Q3', 'Q4 (high)'];
+  function bucketFromBins(value, bins) {
+    for (let i = 0; i < 4; i++) { if (value <= bins[i + 1]) return qLabels[i]; }
+    return qLabels[3];
+  }
+  function csBucket(calls) {
+    if (calls <= 0) return '0';
+    if (calls === 1) return '1';
+    if (calls <= 3) return '2-3';
+    return '4+';
+  }
+  const state = { plan: 'No', vm: 'No', cs: 1, minutes: 180 };
+  function updateEstimator() {
+    const bucket = csBucket(state.cs);
+    const bins = state.plan === 'Yes' ? planBins : noPlanBins;
+    const q = bucketFromBins(state.minutes, bins);
+    const csRow = d.plan_x_cs.find(r => r.plan === state.plan && r.bucket === bucket);
+    const minRows = state.plan === 'Yes' ? d.day_minutes_plan : d.day_minutes_no_plan;
+    const minRow = minRows.find(r => r.q === q);
+    const vmRow = d.plan_x_vm.find(r => r.plan === state.plan && r.vm === state.vm);
+    const rows = [csRow, minRow, vmRow].filter(Boolean);
+    const avg = rows.reduce((a, r) => a + r.rate, 0) / rows.length;
+
+    document.getElementById('risk-pct').textContent = avg.toFixed(0) + '%';
+    const badge = document.getElementById('risk-badge');
+    let label, cls;
+    if (avg < 15) { label = T[curLang].low; cls = 'risk-low'; }
+    else if (avg < 40) { label = T[curLang].medium; cls = 'risk-medium'; }
+    else { label = T[curLang].high; cls = 'risk-high'; }
+    document.getElementById('risk-label').textContent = label;
+    badge.className = 'risk-badge ' + cls;
+
+    const drivers = [
+      { name: "service-call history (" + bucket + " calls, " + state.plan + " int'l plan)", rate: csRow ? csRow.rate : 0 },
+      { name: "usage tier (" + q + " day minutes, " + state.plan + " int'l plan)", rate: minRow ? minRow.rate : 0 },
+      { name: "voicemail status (" + state.vm + " voicemail, " + state.plan + " int'l plan)", rate: vmRow ? vmRow.rate : 0 },
+    ];
+    drivers.sort((a, b) => b.rate - a.rate);
+    document.getElementById('risk-explain').textContent = T[curLang].driver(drivers[0].name, drivers[0].rate);
+  }
+  window.__updateEstimator = updateEstimator;
+  document.querySelectorAll('.toggle-pair').forEach(group => {
+    group.querySelectorAll('.toggle-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('.toggle-opt').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state[group.dataset.control] = btn.dataset.value;
+        updateEstimator();
+      });
+    });
   });
+  document.getElementById('cs-slider').addEventListener('input', (e) => {
+    state.cs = parseInt(e.target.value, 10);
+    document.getElementById('cs-val').textContent = state.cs;
+    updateEstimator();
+  });
+  document.getElementById('min-slider').addEventListener('input', (e) => {
+    state.minutes = parseInt(e.target.value, 10);
+    document.getElementById('min-val').textContent = state.minutes;
+    updateEstimator();
+  });
+  updateEstimator();
+
+  window.__renderModelTable = () => {
+    const tbody = document.querySelector('#model-table tbody');
+    tbody.innerHTML = '';
+    d.models.forEach(m => {
+      const best = m.name === 'Random Forest';
+      tbody.innerHTML += '<tr>' +
+        '<td class="highlight">' + m.name + (best ? ' <span class="pill pill-good">' + T[curLang].best + '</span>' : '') + '</td>' +
+        '<td>' + m.accuracy.toFixed(1) + '%</td>' +
+        '<td>' + m.precision.toFixed(1) + '%</td>' +
+        '<td>' + m.recall.toFixed(1) + '%</td>' +
+        '<td>' + m.f1.toFixed(1) + '%</td>' +
+        '<td class="highlight">' + (m.roc_auc / 100).toFixed(3) + '</td>' +
+        '</tr>';
+    });
+  };
+  window.__renderModelTable();
 });
 </script>
+<script src="assets/i18n-data.js"></script>
+<script src="assets/controls.js"></script>
 </body>
 </html>

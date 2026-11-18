@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>(function(){try{document.documentElement.setAttribute('data-theme', localStorage.getItem('codveda-theme')||'dark');}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Home Value Estimator &middot; Codveda</title>
 <meta name="description" content="Regression case study: Boston Housing price estimation with feature importance and model comparison.">
@@ -14,29 +15,42 @@
   <div class="wrap">
     <a class="brand" href="index.html"><span class="brand-mark"></span>Codveda Analytics</a>
     <ul class="navlinks">
-      <li><a href="index.html">Overview</a></li>
-      <li><a href="churn-dashboard.html">Churn Dashboard</a></li>
-      <li><a href="housing.html" class="active">Housing</a></li>
-      <li><a href="nlp.html">NLP</a></li>
+      <li><a href="index.html" data-i18n="nav.overview">Overview</a></li>
+      <li><a href="churn-dashboard.html" data-i18n="nav.churn">Churn Dashboard</a></li>
+      <li><a href="housing.html" class="active" data-i18n="nav.housing">Housing</a></li>
+      <li><a href="nlp.html" data-i18n="nav.nlp">NLP</a></li>
     </ul>
+    <div class="nav-controls">
+      <div class="lang-toggle">
+        <button type="button" class="lang-btn" data-lang="id">ID</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle light/dark theme">
+        <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+        <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+      <a class="avatar-link" href="https://github.com/greythinkerdue" target="_blank" rel="noopener" title="greythinkerdue on GitHub">
+        <img src="https://github.com/greythinkerdue.png?size=64" alt="greythinkerdue on GitHub">
+      </a>
+    </div>
   </div>
 </nav>
 
 <div class="wrap">
 
   <section class="hero" style="padding-bottom:4px;">
-    <span class="eyebrow">Regression &middot; Case study</span>
-    <h1>Home Value Estimator</h1>
-    <p class="lede">Can structural and neighborhood features alone give a real-estate desk a quick, explainable
+    <span class="eyebrow" data-i18n="common.tag.regression">Regression &middot; Case study</span>
+    <h1 data-i18n="housing.h1">Home Value Estimator</h1>
+    <p class="lede" data-i18n="housing.lede">Can structural and neighborhood features alone give a real-estate desk a quick, explainable
       value estimate &mdash; without relying on a black box?</p>
   </section>
 
   <section style="margin-top:0;">
     <div class="situation">
-      <h2>The situation</h2>
-      <p>506 homes, 14 features. The goal isn't just low error &mdash; it's knowing <strong>which inputs</strong>
+      <h2 data-i18n="common.situation">The situation</h2>
+      <p data-i18n="housing.sit.p1">506 homes, 14 features. The goal isn't just low error &mdash; it's knowing <strong>which inputs</strong>
         actually carry the signal, so a lightweight valuation tool collects the right data instead of everything available.</p>
-      <p>Note: this is the historical Boston Housing benchmark (1978), not current market data, and the race-derived
+      <p data-i18n="housing.sit.p2">Note: this is the historical Boston Housing benchmark (1978), not current market data, and the race-derived
         <code>B</code> feature was excluded from modeling on ethical grounds.</p>
     </div>
   </section>
@@ -44,19 +58,19 @@
   <section style="margin-top:0;">
     <div class="kpi-grid">
       <div class="kpi-tile accent-green">
-        <div class="kpi-label">Best R&sup2; (Decision Tree)</div>
+        <div class="kpi-label" data-i18n="housing.kpi1.label">Best R&sup2; (Decision Tree)</div>
         <div class="kpi-value">0.885</div>
         <div class="kpi-sub">RMSE 2.906</div>
       </div>
       <div class="kpi-tile accent-pink">
-        <div class="kpi-label">Best MAE (Random Forest)</div>
+        <div class="kpi-label" data-i18n="housing.kpi2.label">Best MAE (Random Forest)</div>
         <div class="kpi-value">2.08</div>
-        <div class="kpi-sub">in $000s &mdash; R&sup2; 0.867</div>
+        <div class="kpi-sub" data-i18n="housing.kpi2.sub">in $000s &mdash; R&sup2; 0.867</div>
       </div>
       <div class="kpi-tile accent-gold">
-        <div class="kpi-label">Top 2 features' share</div>
+        <div class="kpi-label" data-i18n="housing.kpi3.label">Top 2 features' share</div>
         <div class="kpi-value" id="kpi-top2">&mdash;</div>
-        <div class="kpi-sub">of total feature importance</div>
+        <div class="kpi-sub" data-i18n="housing.kpi3.sub">of total feature importance</div>
       </div>
     </div>
   </section>
@@ -64,13 +78,13 @@
   <section>
     <div class="grid-2">
       <div class="card">
-        <h3>Actual vs. predicted price (Random Forest)</h3>
-        <p class="card-note">Points hugging the dashed line are well-predicted; the fan-out at the high end shows where the model under-predicts luxury homes.</p>
+        <h3 data-i18n="housing.chart1.h3">Actual vs. predicted price (Random Forest)</h3>
+        <p class="card-note" data-i18n="housing.chart1.note">Points hugging the dashed line are well-predicted; the fan-out at the high end shows where the model under-predicts luxury homes.</p>
         <div class="chart-box"><canvas id="chart-scatter"></canvas></div>
       </div>
       <div class="card">
-        <h3>Feature importance (Random Forest)</h3>
-        <p class="card-note">Room count and neighborhood socioeconomic composition dominate &mdash; crime, tax rate, and distance-to-employment barely register.</p>
+        <h3 data-i18n="housing.chart2.h3">Feature importance (Random Forest)</h3>
+        <p class="card-note" data-i18n="housing.chart2.note">Room count and neighborhood socioeconomic composition dominate &mdash; crime, tax rate, and distance-to-employment barely register.</p>
         <div class="chart-box"><canvas id="chart-importance"></canvas></div>
       </div>
     </div>
@@ -78,11 +92,16 @@
 
   <section>
     <div class="section-head">
-      <h2>Model comparison</h2>
+      <h2 data-i18n="housing.models.h2">Model comparison</h2>
     </div>
     <div class="card">
       <table class="data-table" id="model-table">
-        <thead><tr><th>Model</th><th>MAE</th><th>RMSE</th><th>R&sup2;</th></tr></thead>
+        <thead><tr>
+          <th data-i18n="churn.table.th.model">Model</th>
+          <th data-i18n="housing.table.th.mae">MAE</th>
+          <th data-i18n="housing.table.th.rmse">RMSE</th>
+          <th data-i18n="housing.table.th.r2">R&sup2;</th>
+        </tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -90,18 +109,18 @@
 
   <section>
     <div class="section-head">
-      <h2>Key takeaway &amp; action</h2>
+      <h2 data-i18n="housing.insights.h2">Key takeaway &amp; action</h2>
     </div>
     <div class="insight-list">
       <div class="insight">
         <div class="insight-num">1</div>
         <div class="insight-body">
-          <h4>Two features carry ~83% of the predictive weight &mdash; and the "obvious" ones don't</h4>
-          <p><strong>RM</strong> (average rooms per dwelling) and <strong>LSTAT</strong> (% lower-status population in
+          <h4 data-i18n="housing.ins1.h4">Two features carry ~83% of the predictive weight &mdash; and the "obvious" ones don't</h4>
+          <p data-i18n="housing.ins1.p"><strong>RM</strong> (average rooms per dwelling) and <strong>LSTAT</strong> (% lower-status population in
             the neighborhood) together account for roughly 83% of feature importance. <strong>CRIM</strong> (per-capita
             crime rate) &mdash; the feature most people would guess matters most &mdash; contributes under 4%, similar
             to tax rate and distance to employment centers.</p>
-          <div class="action-tag"><span class="action-label">Action</span><span>For a lightweight valuation tool, prioritize
+          <div class="action-tag"><span class="action-label" data-i18n="common.action">Action</span><span data-i18n="housing.ins1.action">For a lightweight valuation tool, prioritize
             accurate room-count and neighborhood socioeconomic data collection; crime statistics and tax records add
             comparatively little predictive value and can be deprioritized if collection cost is a constraint.</span></div>
         </div>
@@ -111,11 +130,11 @@
 
   <section>
     <div class="limitations">
-      <h3>Limitations</h3>
+      <h3 data-i18n="common.limitations">Limitations</h3>
       <ul>
-        <li>Boston Housing is a 1978 benchmark dataset &mdash; not appropriate for current property pricing or policy decisions.</li>
-        <li>The race-derived <code>B</code> feature was excluded from modeling and from this analysis entirely.</li>
-        <li>506 rows is a small sample for a 12-feature model; importance rankings can shift with more data.</li>
+        <li data-i18n="housing.lim1">Boston Housing is a 1978 benchmark dataset &mdash; not appropriate for current property pricing or policy decisions.</li>
+        <li data-i18n="housing.lim2">The race-derived <code>B</code> feature was excluded from modeling and from this analysis entirely.</li>
+        <li data-i18n="housing.lim3">506 rows is a small sample for a 12-feature model; importance rankings can shift with more data.</li>
       </ul>
     </div>
   </section>
@@ -125,8 +144,8 @@
 <footer>
   <div class="wrap">
     <div class="foot-row">
-      <span>Data: Boston Housing benchmark (506 rows, 12 modeled features).</span>
-      <span><a href="index.html">&larr; Back to overview</a></span>
+      <span data-i18n="housing.footer.left">Data: Boston Housing benchmark (506 rows, 12 modeled features).</span>
+      <span><a href="index.html" data-i18n="common.footer.back">&larr; Back to overview</a></span>
     </div>
   </div>
 </footer>
@@ -134,6 +153,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="assets/charts.js"></script>
 <script>
+const T = { en: { bestR2: 'best R²' }, id: { bestR2: 'terbaik R²' } };
+let curLang = (function () { try { return localStorage.getItem('codveda-lang') || 'en'; } catch (e) { return 'en'; } })();
+document.addEventListener('codveda:langchange', (e) => { curLang = e.detail.lang; if (window.__renderModelTable) window.__renderModelTable(); });
+
 fetch('assets/data/housing.json').then(r => r.json()).then(d => {
 
   const top2Share = (d.feature_importance[0].importance + d.feature_importance[1].importance) * 100;
@@ -153,18 +176,24 @@ fetch('assets/data/housing.json').then(r => r.json()).then(d => {
     tooltipCallbacks: { label: (ctx) => 'Importance: ' + (ctx.parsed.x * 100).toFixed(1) + '%' },
   });
 
-  const tbody = document.querySelector('#model-table tbody');
-  Object.entries(d.metrics).forEach(([name, m]) => {
-    const best = name === 'Decision Tree';
-    tbody.innerHTML += '<tr>' +
-      '<td class="highlight">' + name + (best ? ' <span class="pill pill-good">best R&sup2;</span>' : '') + '</td>' +
-      '<td>' + m.mae.toFixed(2) + '</td>' +
-      '<td>' + m.rmse.toFixed(2) + '</td>' +
-      '<td class="highlight">' + m.r2.toFixed(3) + '</td>' +
-      '</tr>';
-  });
-  tbody.innerHTML += '<tr><td class="highlight">Linear Regression</td><td>3.11</td><td>4.77</td><td>0.689</td></tr>';
+  window.__renderModelTable = () => {
+    const tbody = document.querySelector('#model-table tbody');
+    tbody.innerHTML = '';
+    Object.entries(d.metrics).forEach(([name, m]) => {
+      const best = name === 'Decision Tree';
+      tbody.innerHTML += '<tr>' +
+        '<td class="highlight">' + name + (best ? ' <span class="pill pill-good">' + T[curLang].bestR2 + '</span>' : '') + '</td>' +
+        '<td>' + m.mae.toFixed(2) + '</td>' +
+        '<td>' + m.rmse.toFixed(2) + '</td>' +
+        '<td class="highlight">' + m.r2.toFixed(3) + '</td>' +
+        '</tr>';
+    });
+    tbody.innerHTML += '<tr><td class="highlight">Linear Regression</td><td>3.11</td><td>4.77</td><td>0.689</td></tr>';
+  };
+  window.__renderModelTable();
 });
 </script>
+<script src="assets/i18n-data.js"></script>
+<script src="assets/controls.js"></script>
 </body>
 </html>

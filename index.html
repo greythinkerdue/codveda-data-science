@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>(function(){try{document.documentElement.setAttribute('data-theme', localStorage.getItem('codveda-theme')||'dark');}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Codveda Data Science Portfolio</title>
 <meta name="description" content="Churn analytics, housing regression, and NLP sentiment classification — a Codveda Data Science Internship portfolio.">
@@ -14,78 +15,90 @@
   <div class="wrap">
     <a class="brand" href="index.html"><span class="brand-mark"></span>Codveda Analytics</a>
     <ul class="navlinks">
-      <li><a href="index.html" class="active">Overview</a></li>
-      <li><a href="churn-dashboard.html">Churn Dashboard</a></li>
-      <li><a href="housing.html">Housing</a></li>
-      <li><a href="nlp.html">NLP</a></li>
+      <li><a href="index.html" class="active" data-i18n="nav.overview">Overview</a></li>
+      <li><a href="churn-dashboard.html" data-i18n="nav.churn">Churn Dashboard</a></li>
+      <li><a href="housing.html" data-i18n="nav.housing">Housing</a></li>
+      <li><a href="nlp.html" data-i18n="nav.nlp">NLP</a></li>
     </ul>
+    <div class="nav-controls">
+      <div class="lang-toggle">
+        <button type="button" class="lang-btn" data-lang="id">ID</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle light/dark theme">
+        <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+        <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+      <a class="avatar-link" href="https://github.com/greythinkerdue" target="_blank" rel="noopener" title="greythinkerdue on GitHub">
+        <img src="https://github.com/greythinkerdue.png?size=64" alt="greythinkerdue on GitHub">
+      </a>
+    </div>
   </div>
 </nav>
 
 <div class="wrap">
 
   <section class="hero">
-    <span class="eyebrow">Codveda Data Science Internship &middot; Mar&ndash;Apr 2026</span>
-    <h1>From raw telecom, housing &amp; social data to decisions a business can act on.</h1>
-    <p class="lede">Six tasks across three real-world datasets &mdash; cleaned, modeled, and turned into a churn
+    <span class="eyebrow" data-i18n="index.eyebrow">Codveda Data Science Internship &middot; Mar&ndash;Apr 2026</span>
+    <h1 data-i18n="index.h1">From raw telecom, housing &amp; social data to decisions a business can act on.</h1>
+    <p class="lede" data-i18n="index.lede">Six tasks across three real-world datasets &mdash; cleaned, modeled, and turned into a churn
       retention dashboard, a home-value estimator, and a social sentiment triage model. Built to show the full
       pipeline: data quality, modeling trade-offs, and the business actions each result actually supports.</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="churn-dashboard.html">Open the churn dashboard &rarr;</a>
-      <a class="btn btn-ghost" href="notebooks/Codveda_Data_Science_Tasks.ipynb">View notebook</a>
-      <a class="btn btn-ghost" href="reports/Codveda_Data_Science_Results_Report.pdf">Results report (PDF)</a>
-      <a class="btn btn-ghost" href="https://github.com/greythinkerdue/codveda-data-science">GitHub repo</a>
+      <a class="btn btn-primary" href="churn-dashboard.html" data-i18n="index.cta.churn">Open the churn dashboard &rarr;</a>
+      <a class="btn btn-ghost" href="notebooks/Codveda_Data_Science_Tasks.ipynb" data-i18n="index.cta.notebook">View notebook</a>
+      <a class="btn btn-ghost" href="https://github.com/greythinkerdue/codveda-data-science" data-i18n="index.cta.github">GitHub repo</a>
     </div>
   </section>
 
   <section style="margin-top:0;">
     <div class="situation">
-      <h2>The situation</h2>
-      <p>This portfolio stands in for three analytics requests a data team gets asked to solve:</p>
-      <p><strong>1. A telecom operator</strong> is losing <strong>14.49%</strong> of its subscriber base and
+      <h2 data-i18n="common.situation">The situation</h2>
+      <p data-i18n="index.sit.intro">This portfolio stands in for three analytics requests a data team gets asked to solve:</p>
+      <p data-i18n="index.sit.p1"><strong>1. A telecom operator</strong> is losing <strong>14.49%</strong> of its subscriber base and
         wants to know who is at risk and why &mdash; not just a churn score, but a reason a retention team can act on.</p>
-      <p><strong>2. A real-estate desk</strong> wants a quick, explainable estimate of home value from structural
+      <p data-i18n="index.sit.p2"><strong>2. A real-estate desk</strong> wants a quick, explainable estimate of home value from structural
         and neighborhood features, without relying on a black box.</p>
-      <p><strong>3. A social/brand team</strong> is drowning in unlabeled mentions and wants mentions auto-sorted
+      <p data-i18n="index.sit.p3"><strong>3. A social/brand team</strong> is drowning in unlabeled mentions and wants mentions auto-sorted
         into positive, negative, and neutral so human reviewers only touch what matters.</p>
-      <p>Each section below answers one of these with real metrics, real trade-offs, and a stated limitation &mdash;
+      <p data-i18n="index.sit.p4">Each section below answers one of these with real metrics, real trade-offs, and a stated limitation &mdash;
         not just a chart.</p>
     </div>
   </section>
 
   <section>
     <div class="section-head">
-      <h2>Four models, one pipeline</h2>
-      <p>Data cleaning &amp; EDA, regression, classification, NLP, and a neural network benchmark &mdash; six
+      <h2 data-i18n="index.models.h2">Four models, one pipeline</h2>
+      <p data-i18n="index.models.p">Data cleaning &amp; EDA, regression, classification, NLP, and a neural network benchmark &mdash; six
         selected tasks from the Codveda brief, run end-to-end in one notebook.</p>
     </div>
     <div class="proj-grid">
 
       <a class="proj-card" href="churn-dashboard.html">
-        <span class="proj-tag" style="background:var(--pink-soft); color:var(--pink);">Classification &middot; Flagship</span>
-        <h3>Churn retention dashboard</h3>
-        <p>Random Forest flags at-risk subscribers; segment analysis finds three retention levers that customer-service
+        <span class="proj-tag" style="background:var(--pink-soft); color:var(--pink);" data-i18n="index.card.churn.tag">Classification</span>
+        <h3 data-i18n="index.card.churn.title">Churn retention dashboard</h3>
+        <p data-i18n="index.card.churn.desc">Random Forest flags at-risk subscribers; segment analysis finds three retention levers that customer-service
           complaint data alone would miss.</p>
         <div class="proj-metric" style="color:var(--pink);">0.923</div>
-        <div class="proj-metric-label">ROC-AUC, Random Forest</div>
+        <div class="proj-metric-label" data-i18n="index.card.churn.metric">ROC-AUC, Random Forest</div>
       </a>
 
       <a class="proj-card" href="housing.html">
-        <span class="proj-tag" style="background:var(--green-soft); color:var(--green);">Regression</span>
-        <h3>Home value estimator</h3>
-        <p>Three regressors benchmarked on the Boston Housing data; feature importance shows which inputs actually
+        <span class="proj-tag" style="background:var(--green-soft); color:var(--green);" data-i18n="index.card.housing.tag">Regression</span>
+        <h3 data-i18n="index.card.housing.title">Home value estimator</h3>
+        <p data-i18n="index.card.housing.desc">Three regressors benchmarked on the Boston Housing data; feature importance shows which inputs actually
           carry predictive weight.</p>
         <div class="proj-metric" style="color:var(--green);">0.885</div>
-        <div class="proj-metric-label">R&sup2;, Decision Tree</div>
+        <div class="proj-metric-label" data-i18n="index.card.housing.metric">R&sup2;, Decision Tree</div>
       </a>
 
       <a class="proj-card" href="nlp.html">
-        <span class="proj-tag" style="background:var(--gold-soft); color:var(--gold);">NLP &middot; Text classification</span>
-        <h3>Sentiment triage model</h3>
-        <p>TF-IDF + Logistic Regression sorts social posts into polarity classes derived from raw emotion labels, with
+        <span class="proj-tag" style="background:var(--gold-soft); color:var(--gold);" data-i18n="index.card.nlp.tag">NLP &middot; Text classification</span>
+        <h3 data-i18n="index.card.nlp.title">Sentiment triage model</h3>
+        <p data-i18n="index.card.nlp.desc">TF-IDF + Logistic Regression sorts social posts into polarity classes derived from raw emotion labels, with
           a documented blind spot on neutral content.</p>
         <div class="proj-metric" style="color:var(--gold);">76.2%</div>
-        <div class="proj-metric-label">Accuracy, Logistic Regression</div>
+        <div class="proj-metric-label" data-i18n="index.card.nlp.metric">Accuracy, Logistic Regression</div>
       </a>
 
     </div>
@@ -93,19 +106,26 @@
 
   <section>
     <div class="section-head">
-      <h2>Data quality at a glance</h2>
-      <p>What went into the models, before any of the above happened.</p>
+      <h2 data-i18n="index.quality.h2">Data quality at a glance</h2>
+      <p data-i18n="index.quality.p">What went into the models, before any of the above happened.</p>
     </div>
     <div class="card">
       <table class="data-table">
         <thead>
-          <tr><th>Dataset</th><th>Rows</th><th>Columns</th><th>Missing cells</th><th>Duplicates</th><th>Cleaning notes</th></tr>
+          <tr>
+            <th data-i18n="index.quality.th.dataset">Dataset</th>
+            <th data-i18n="index.quality.th.rows">Rows</th>
+            <th data-i18n="index.quality.th.cols">Columns</th>
+            <th data-i18n="index.quality.th.missing">Missing cells</th>
+            <th data-i18n="index.quality.th.dupes">Duplicates</th>
+            <th data-i18n="index.quality.th.notes">Cleaning notes</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td class="highlight">Telecom churn (80%+20%)</td><td>3,333</td><td>21</td><td>0</td><td>0</td><td>Trimmed categorical strings; converted Churn to 0/1; IQR outliers flagged and retained when plausible.</td></tr>
-          <tr><td class="highlight">Social media sentiment</td><td>732</td><td>15</td><td>0</td><td>22</td><td>Removed exported index columns; trimmed text; parsed timestamps; normalized emotion labels.</td></tr>
-          <tr><td class="highlight">Housing prediction</td><td>506</td><td>14</td><td>0</td><td>0</td><td>Assigned conventional Boston Housing column names to a headerless 14-column file.</td></tr>
-          <tr><td class="highlight">Iris (reference only)</td><td>150</td><td>5</td><td>0</td><td>3</td><td>Duplicate rows removed; not used in the selected modeling tasks.</td></tr>
+          <tr><td class="highlight" data-i18n="index.quality.row1.name">Telecom churn (80%+20%)</td><td>3,333</td><td>21</td><td>0</td><td>0</td><td data-i18n="index.quality.row1.notes">Trimmed categorical strings; converted Churn to 0/1; IQR outliers flagged and retained when plausible.</td></tr>
+          <tr><td class="highlight" data-i18n="index.quality.row2.name">Social media sentiment</td><td>732</td><td>15</td><td>0</td><td>22</td><td data-i18n="index.quality.row2.notes">Removed exported index columns; trimmed text; parsed timestamps; normalized emotion labels.</td></tr>
+          <tr><td class="highlight" data-i18n="index.quality.row3.name">Housing prediction</td><td>506</td><td>14</td><td>0</td><td>0</td><td data-i18n="index.quality.row3.notes">Assigned conventional Boston Housing column names to a headerless 14-column file.</td></tr>
+          <tr><td class="highlight" data-i18n="index.quality.row4.name">Iris (reference only)</td><td>150</td><td>5</td><td>0</td><td>3</td><td data-i18n="index.quality.row4.notes">Duplicate rows removed; not used in the selected modeling tasks.</td></tr>
         </tbody>
       </table>
     </div>
@@ -116,11 +136,13 @@
 <footer>
   <div class="wrap">
     <div class="foot-row">
-      <span>Codveda Data Science Task Portfolio &middot; built from the supplied Codveda datasets and task list.</span>
-      <span><a href="https://github.com/greythinkerdue/codveda-data-science">Source on GitHub</a> &middot; <a href="reports/Data_Science_Task_List.pdf">Task brief (PDF)</a></span>
+      <span data-i18n="common.footer.left">Codveda Data Science Task Portfolio &middot; built from the supplied Codveda datasets and task list.</span>
+      <span><a href="https://github.com/greythinkerdue/codveda-data-science" data-i18n="common.footer.source">Source on GitHub</a> &middot; <a href="reports/Data_Science_Task_List.pdf" data-i18n="common.footer.brief">Task brief (PDF)</a></span>
     </div>
   </div>
 </footer>
 
+<script src="assets/i18n-data.js"></script>
+<script src="assets/controls.js"></script>
 </body>
 </html>
