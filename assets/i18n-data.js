@@ -80,7 +80,6 @@ const I18N = {
       row1: { name: { en: "Telecom churn (80%+20%)", id: "Churn telekomunikasi (80%+20%)" }, notes: { en: "Trimmed categorical strings; converted Churn to 0/1; IQR outliers flagged and retained when plausible.", id: "Merapikan teks kategori; mengubah Churn jadi 0/1; outlier ditandai dan tetap dipakai kalau masih masuk akal." } },
       row2: { name: { en: "Social media sentiment", id: "Sentimen media sosial" }, notes: { en: "Removed exported index columns; trimmed text; parsed timestamps; normalized emotion labels.", id: "Menghapus kolom index bawaan ekspor; merapikan teks; membaca timestamp; menyeragamkan label emosi." } },
       row3: { name: { en: "Housing prediction", id: "Prediksi housing" }, notes: { en: "Assigned conventional Boston Housing column names to a headerless 14-column file.", id: "Memberi nama kolom standar Boston Housing ke file 14 kolom yang tadinya tanpa judul kolom." } },
-      row4: { name: { en: "Iris (reference only)", id: "Iris (hanya referensi)" }, notes: { en: "Duplicate rows removed; not used in the selected modeling tasks.", id: "Baris duplikat dihapus; tidak dipakai di tugas pemodelan terpilih." } },
     },
   },
 
