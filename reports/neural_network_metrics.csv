@@ -1,0 +1,2 @@
+Task,Model,Accuracy,Precision,Recall,F1,ROC_AUC,Training_epochs
+Customer churn neural network,"Keras MLP (64, 32)",0.889055472263868,0.5897435897435898,0.7263157894736842,0.6509433962264151,0.9039013617960986,20

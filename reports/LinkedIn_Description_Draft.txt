@@ -1,0 +1,19 @@
+LINKEDIN EXPERIENCE DESCRIPTION — CODVEDA TECHNOLOGIES (DRAFT)
+
+IMPORTANT:
+Use the internship-specific wording only if these tasks were actually completed as part of your Codveda internship and you can personally explain and verify the work. If this analysis was reconstructed after the internship, describe it as an independent portfolio project instead of implying it was completed during the internship.
+
+VERSION A — If these were completed during the Codveda internship:
+Completed six hands-on Data Science tasks across basic, intermediate, and advanced levels, covering data cleaning, exploratory data analysis, regression, classification, NLP text classification, and neural network modeling.
+
+• Cleaned and explored 3,333 telecom customer records, assessing data quality, churn patterns, and key behavioral indicators.
+• Compared Linear Regression, Decision Tree, and Random Forest models on 506 housing records, with the Decision Tree achieving an R² of 0.885.
+• Built customer churn classification models using Logistic Regression and Random Forest, achieving 94.75% accuracy, 79.04% churn-class F1-score, and 0.923 ROC-AUC on the supplied holdout test set.
+• Developed TF-IDF-based text classification and a Keras-based feed-forward neural network, achieving 78.23% NLP accuracy and 88.91% neural-network accuracy.
+
+Tools: Python, Pandas, NumPy, Scikit-learn, Matplotlib, TF-IDF, and Jupyter Notebook.
+
+VERSION B — If completed now as an independent portfolio reconstruction:
+Completed six independent Data Science assignments based on the Codveda task framework, using the supplied datasets to practice data preprocessing, EDA, regression, classification, NLP, and neural network modeling. Results and reproducible code are documented in a separate portfolio notebook.
+
+Tools: Python, Pandas, NumPy, Scikit-learn, Matplotlib, TF-IDF, and Jupyter Notebook.

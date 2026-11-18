@@ -1,0 +1,5 @@
+Dataset,Rows,Columns,Missing cells,Duplicate records,Cleaning notes
+Telecom churn (80% + 20%),3333,21,0,0,Trimmed categorical strings; converted Churn to 0/1; IQR outliers flagged and retained when plausible.
+Social media sentiment,732,15,0,22,Removed exported index columns; trimmed text; parsed timestamps; normalized emotion labels.
+Housing prediction,506,14,0,0,Assigned conventional Boston Housing column names to headerless 14-column file.
+Iris,150,5,0,3,Removed 3 duplicate rows; retained as an unused reference dataset.
