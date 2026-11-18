@@ -368,10 +368,18 @@ section { margin: 48px 0; }
 }
 
 /* ---------- Table ---------- */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 table.data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13.5px;
+}
+@media (max-width: 640px) {
+  .table-scroll table.data-table { min-width: 560px; }
 }
 .data-table th, .data-table td {
   text-align: left;
@@ -526,7 +534,52 @@ footer .foot-row { display: flex; justify-content: space-between; flex-wrap: wra
 }
 
 @media (max-width: 760px) {
-  .navlinks { display: none; }
+  .nav .wrap {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 10px 20px;
+    row-gap: 8px;
+    gap: 12px;
+  }
+  .brand { font-size: 15px; white-space: nowrap; }
+  .navlinks {
+    order: 3;
+    width: 100%;
+    margin-right: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .navlinks::-webkit-scrollbar { display: none; }
+  .navlinks li { flex: none; }
+  .navlinks a { white-space: nowrap; }
+}
+
+/* ---------- Mobile type scale (phones feel "zoomed in" otherwise) ---------- */
+@media (max-width: 600px) {
+  .wrap { padding: 0 16px; }
+  .hero { padding: 28px 0 18px; }
+  .eyebrow { font-size: 11px; padding: 4px 10px; margin-bottom: 14px; }
+  h1 { font-size: clamp(24px, 7.5vw, 48px); }
+  .lede { font-size: 15px; }
+  .hero-actions .btn { font-size: 13px; padding: 9px 14px; }
+  .situation { padding: 18px 18px; }
+  .situation p { font-size: 14px; }
+  section { margin: 34px 0; }
+  .section-head h2 { font-size: 19px; }
+  .section-head p { font-size: 13.5px; }
+  .kpi-tile { padding: 16px 16px 15px; }
+  .kpi-value { font-size: 24px; }
+  .card { padding: 16px 16px 18px; }
+  .card h3 { font-size: 14px; }
+  .proj-card { padding: 18px; }
+  .proj-metric { font-size: 19px; }
+  .insight { padding: 16px 18px; grid-template-columns: 28px 1fr; gap: 12px; }
+  .insight-num { width: 28px; height: 28px; font-size: 13px; }
+  .insight-body h4 { font-size: 14.5px; }
+  .risk-pct { font-size: 32px; }
+  .chart-box { height: 220px; }
 }
 
 /* ---------- Interactive churn-risk estimator ---------- */
