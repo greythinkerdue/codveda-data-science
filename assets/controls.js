@@ -37,6 +37,7 @@
       themeBtn.addEventListener('click', function () {
         const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         setTheme(next);
+        document.dispatchEvent(new CustomEvent('codveda:themechange', { detail: { theme: next } }));
       });
     }
 

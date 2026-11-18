@@ -3,22 +3,35 @@ const COLOR = {
   pink: '#e0447f',
   gold: '#b8872e',
   green: '#3e9b68',
-  textSecondary: '#a9b0ae',
-  textMuted: '#6e7570',
-  grid: '#262b31',
 };
+
+function cssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function themeColors() {
+  return {
+    text: cssVar('--text-primary'),
+    muted: cssVar('--text-muted'),
+    grid: cssVar('--gridline'),
+    surface: cssVar('--surface-3'),
+    border: cssVar('--border-hairline'),
+    pointBorder: cssVar('--surface-1'),
+  };
+}
 
 Chart.defaults.font.family = "'Inter', system-ui, -apple-system, sans-serif";
 Chart.defaults.font.size = 12.5;
-Chart.defaults.color = COLOR.textSecondary;
+Chart.defaults.color = themeColors().text;
 
 function baseTooltip() {
+  const t = themeColors();
   return {
-    backgroundColor: '#232833',
-    borderColor: 'rgba(255,255,255,0.08)',
+    backgroundColor: t.surface,
+    borderColor: t.border,
     borderWidth: 1,
-    titleColor: '#f5f7f6',
-    bodyColor: '#a9b0ae',
+    titleColor: t.text,
+    bodyColor: t.text,
     padding: 10,
     cornerRadius: 8,
     titleFont: { weight: '600' },
@@ -29,7 +42,7 @@ function baseTooltip() {
 
 function gridOpts() {
   return {
-    color: COLOR.grid,
+    color: themeColors().grid,
     drawTicks: false,
   };
 }
@@ -37,6 +50,7 @@ function gridOpts() {
 // Single or grouped vertical bar chart. series: [{label, data, color}]
 function renderBarChart(canvasId, labels, series, opts = {}) {
   const ctx = document.getElementById(canvasId).getContext('2d');
+  const t = themeColors();
   const datasets = series.map(s => ({
     label: s.label,
     data: s.data,
@@ -47,7 +61,7 @@ function renderBarChart(canvasId, labels, series, opts = {}) {
     categoryPercentage: 0.7,
     barPercentage: 0.85,
   }));
-  return new Chart(ctx, {
+  const chart = new Chart(ctx, {
     type: 'bar',
     data: { labels, datasets },
     options: {
@@ -58,7 +72,7 @@ function renderBarChart(canvasId, labels, series, opts = {}) {
           display: series.length > 1,
           position: 'top',
           align: 'start',
-          labels: { boxWidth: 8, boxHeight: 8, usePointStyle: true, pointStyle: 'rect', padding: 16 },
+          labels: { boxWidth: 8, boxHeight: 8, usePointStyle: true, pointStyle: 'rect', padding: 16, color: t.text },
         },
         tooltip: {
           ...baseTooltip(),
@@ -66,23 +80,26 @@ function renderBarChart(canvasId, labels, series, opts = {}) {
         },
       },
       scales: {
-        x: { grid: { display: false }, border: { color: COLOR.grid } },
+        x: { grid: { display: false }, border: { color: t.grid }, ticks: { color: t.text } },
         y: {
           beginAtZero: true,
           grid: gridOpts(),
           border: { display: false },
-          ticks: { callback: (v) => opts.ySuffix ? v + opts.ySuffix : v },
+          ticks: { color: t.text, callback: (v) => opts.ySuffix ? v + opts.ySuffix : v },
           max: opts.yMax,
         },
       },
       ...opts.extra,
     },
   });
+  registerThemedChart(chart);
+  return chart;
 }
 
 // Line chart for quartile / trend data. series: [{label, data, color}]
 function renderLineChart(canvasId, labels, series, opts = {}) {
   const ctx = document.getElementById(canvasId).getContext('2d');
+  const t = themeColors();
   const datasets = series.map(s => ({
     label: s.label,
     data: s.data,
@@ -92,12 +109,12 @@ function renderLineChart(canvasId, labels, series, opts = {}) {
     pointRadius: 4,
     pointHoverRadius: 6,
     pointBackgroundColor: s.color,
-    pointBorderColor: '#14171c',
+    pointBorderColor: t.pointBorder,
     pointBorderWidth: 2,
     tension: 0.25,
     fill: false,
   }));
-  return new Chart(ctx, {
+  const chart = new Chart(ctx, {
     type: 'line',
     data: { labels, datasets },
     options: {
@@ -108,27 +125,30 @@ function renderLineChart(canvasId, labels, series, opts = {}) {
           display: series.length > 1,
           position: 'top',
           align: 'start',
-          labels: { boxWidth: 8, boxHeight: 8, usePointStyle: true, pointStyle: 'circle', padding: 16 },
+          labels: { boxWidth: 8, boxHeight: 8, usePointStyle: true, pointStyle: 'circle', padding: 16, color: t.text },
         },
         tooltip: { ...baseTooltip(), callbacks: opts.tooltipCallbacks || {} },
       },
       scales: {
-        x: { grid: { display: false }, border: { color: COLOR.grid } },
+        x: { grid: { display: false }, border: { color: t.grid }, ticks: { color: t.text } },
         y: {
           beginAtZero: true,
           grid: gridOpts(),
           border: { display: false },
-          ticks: { callback: (v) => opts.ySuffix ? v + opts.ySuffix : v },
+          ticks: { color: t.text, callback: (v) => opts.ySuffix ? v + opts.ySuffix : v },
         },
       },
     },
   });
+  registerThemedChart(chart);
+  return chart;
 }
 
 // Horizontal bar for feature importance / ranked magnitude.
 function renderHBarChart(canvasId, labels, data, opts = {}) {
   const ctx = document.getElementById(canvasId).getContext('2d');
-  return new Chart(ctx, {
+  const t = themeColors();
+  const chart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels,
@@ -149,18 +169,21 @@ function renderHBarChart(canvasId, labels, data, opts = {}) {
         tooltip: { ...baseTooltip(), callbacks: opts.tooltipCallbacks || {} },
       },
       scales: {
-        x: { beginAtZero: true, grid: gridOpts(), border: { display: false } },
-        y: { grid: { display: false }, border: { display: false } },
+        x: { beginAtZero: true, grid: gridOpts(), border: { display: false }, ticks: { color: t.text } },
+        y: { grid: { display: false }, border: { display: false }, ticks: { color: t.text } },
       },
     },
   });
+  registerThemedChart(chart);
+  return chart;
 }
 
 // Scatter plot (actual vs predicted).
 function renderScatterChart(canvasId, points, opts = {}) {
   const ctx = document.getElementById(canvasId).getContext('2d');
+  const t = themeColors();
   const max = Math.max(...points.map(p => Math.max(p.x, p.y))) * 1.05;
-  return new Chart(ctx, {
+  const chart = new Chart(ctx, {
     type: 'scatter',
     data: {
       datasets: [
@@ -189,16 +212,47 @@ function renderScatterChart(canvasId, points, opts = {}) {
       plugins: {
         legend: {
           display: true, position: 'top', align: 'start',
-          labels: { boxWidth: 8, boxHeight: 8, usePointStyle: true, padding: 16 },
+          labels: { boxWidth: 8, boxHeight: 8, usePointStyle: true, padding: 16, color: t.text },
         },
         tooltip: { ...baseTooltip(), callbacks: opts.tooltipCallbacks || {} },
       },
       scales: {
-        x: { title: { display: true, text: 'Actual MEDV ($000s)', color: COLOR.textMuted }, grid: gridOpts(), border: { display: false } },
-        y: { title: { display: true, text: 'Predicted MEDV ($000s)', color: COLOR.textMuted }, grid: gridOpts(), border: { display: false } },
+        x: { title: { display: true, text: 'Actual MEDV ($000s)', color: t.muted }, grid: gridOpts(), border: { display: false }, ticks: { color: t.text } },
+        y: { title: { display: true, text: 'Predicted MEDV ($000s)', color: t.muted }, grid: gridOpts(), border: { display: false }, ticks: { color: t.text } },
       },
     },
   });
+  registerThemedChart(chart);
+  return chart;
 }
 
 function fmtPct(v) { return v.toFixed(1) + '%'; }
+
+// --- Live theme updates for already-rendered charts ---
+const __themedCharts = [];
+function registerThemedChart(chart) {
+  __themedCharts.push(chart);
+}
+function restyleChartsForTheme() {
+  const t = themeColors();
+  Chart.defaults.color = t.text;
+  __themedCharts.forEach(chart => {
+    const opts = chart.options;
+    if (opts.plugins && opts.plugins.legend && opts.plugins.legend.labels) {
+      opts.plugins.legend.labels.color = t.text;
+    }
+    if (opts.plugins && opts.plugins.tooltip) {
+      Object.assign(opts.plugins.tooltip, baseTooltip(), { callbacks: opts.plugins.tooltip.callbacks });
+    }
+    ['x', 'y'].forEach(axis => {
+      const scale = opts.scales && opts.scales[axis];
+      if (!scale) return;
+      if (scale.ticks) scale.ticks.color = t.text;
+      if (scale.grid) scale.grid.color = t.grid;
+      if (scale.border && scale.border.color) scale.border.color = t.grid;
+      if (scale.title) scale.title.color = t.muted;
+    });
+    chart.update();
+  });
+}
+document.addEventListener('codveda:themechange', restyleChartsForTheme);
