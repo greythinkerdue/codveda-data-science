@@ -88,8 +88,17 @@ const I18N = {
   datasets: {
     eyebrow: { en: "Data", id: "Data" },
     h1: { en: "Datasets", id: "Dataset" },
-    lede: { en: "A live look at the actual data behind every chart on this site &mdash; not just a summary table. Switch between datasets below.", id: "Lihat langsung data asli di balik setiap chart di situs ini &mdash; bukan cuma tabel ringkasan. Pindah-pindah dataset di bawah." },
-    sit: { p: { en: "These are the three real datasets used across the dashboards, shown after the same cleaning steps described on each page. Only a small sample (12 rows) is shown here &mdash; the full raw files are intentionally excluded from the public repo (see <code>.gitignore</code>), so this preview exists specifically so a reviewer can see the real shape and quality of the data without downloading it.", id: "Ini tiga dataset asli yang dipakai di semua dashboard, ditampilkan setelah melalui proses pembersihan yang sama seperti dijelaskan di tiap halaman. Yang ditampilkan di sini cuma sample kecil (12 baris) &mdash; file mentah lengkapnya memang sengaja tidak dimasukkan ke repo publik (lihat <code>.gitignore</code>), jadi preview ini dibuat khusus supaya orang bisa lihat bentuk dan kualitas data aslinya tanpa perlu download." } },
+    lede: { en: "The full dataset behind every chart on this site &mdash; not a summary. Sort any column, filter it like a spreadsheet, and page through all the rows.", id: "Dataset lengkap di balik setiap chart di situs ini &mdash; bukan ringkasan. Urutkan kolom mana saja, filter kayak spreadsheet, dan buka tiap halaman datanya." },
+    sit: { p: { en: "These are the three real datasets used across the dashboards, shown after the same cleaning steps described on each page. Click a column header to sort, type or pick a value under a header to filter it, and use the pager below the table to move through all rows.", id: "Ini tiga dataset asli yang dipakai di semua dashboard, ditampilkan setelah melalui proses pembersihan yang sama seperti dijelaskan di tiap halaman. Klik judul kolom buat urutkan datanya, ketik atau pilih nilai di bawah judul kolom buat filter, dan pakai navigasi halaman di bawah tabel buat lihat semua baris." } },
+    reset: { en: "Reset filters", id: "Reset filter" },
+    loading: { en: "Loading full dataset&hellip;", id: "Memuat dataset lengkap&hellip;" },
+    filter: {
+      all: { en: "All", id: "Semua" },
+      placeholder: { en: "Filter&hellip;", id: "Filter&hellip;" },
+    },
+    pager: {
+      info: { en: "Showing {from}&ndash;{to} of {filtered} rows (filtered from {total} total)", id: "Menampilkan {from}&ndash;{to} dari {filtered} baris (hasil filter dari {total} total)" },
+    },
     tab: {
       churn: { en: "Telecom churn", id: "Churn telekomunikasi" },
       housing: { en: "Housing", id: "Housing" },
@@ -105,9 +114,12 @@ const I18N = {
       cols: { en: "columns", id: "kolom" },
       shown: { en: "rows shown", id: "baris ditampilkan" },
     },
-    lim1: { en: "This is a 12-row sample for inspection, not the full dataset &mdash; row counts and distributions should be read from the dashboard pages, not estimated from this preview.", id: "Ini cuma sample 12 baris buat dilihat-lihat, bukan dataset lengkapnya &mdash; jumlah baris dan distribusi datanya sebaiknya dilihat dari halaman dashboard, bukan ditebak dari preview ini." },
     lim2: { en: "Values shown are post-cleaning (see each dashboard's \"Data quality\" notes for what changed from the raw source).", id: "Nilai yang ditampilkan sudah melalui proses pembersihan (lihat catatan \"Data quality\" di tiap dashboard buat tahu apa yang diubah dari sumber aslinya)." },
-    footer: { left: { en: "Sample rows only &mdash; raw and full processed files are excluded from this public repo by design.", id: "Cuma sample baris &mdash; file mentah dan file olahan lengkapnya memang sengaja tidak dimasukkan ke repo publik ini." } },
+    lim3: { en: "Filtering matches on the displayed text/value; it does not re-run any model or recompute the dashboard metrics.", id: "Filter ini cuma mencocokkan teks/nilai yang ditampilkan; tidak menjalankan ulang model atau menghitung ulang metrik di dashboard." },
+    footer: {
+      left: { en: "Sample rows only &mdash; raw and full processed files are excluded from this public repo by design.", id: "Cuma sample baris &mdash; file mentah dan file olahan lengkapnya memang sengaja tidak dimasukkan ke repo publik ini." },
+      left2: { en: "Full cleaned datasets, loaded client-side &mdash; the raw source files stay out of this public repo by design.", id: "Dataset lengkap yang sudah dibersihkan, dimuat langsung di browser &mdash; file sumber mentahnya memang sengaja tidak dimasukkan ke repo publik ini." },
+    },
   },
 
   churn: {

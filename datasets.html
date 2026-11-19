@@ -5,7 +5,7 @@
 <script>(function(){try{document.documentElement.setAttribute('data-theme', localStorage.getItem('codveda-theme')||'dark');}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Datasets &middot; Codveda</title>
-<meta name="description" content="Live preview of the raw telecom churn, housing, and social sentiment datasets behind this portfolio.">
+<meta name="description" content="Full, sortable, filterable preview of the raw telecom churn, housing, and social sentiment datasets behind this portfolio.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%2314171c%22/><circle cx=%2213%22 cy=%2216%22 r=%227%22 fill=%22%23e0447f%22/><circle cx=%2221%22 cy=%2216%22 r=%227%22 fill=%22%233e9b68%22 fill-opacity=%220.85%22/></svg>">
 <link rel="stylesheet" href="assets/style.css">
 </head>
@@ -42,13 +42,13 @@
   <section class="hero" style="padding-bottom:4px;">
     <span class="eyebrow" data-i18n="datasets.eyebrow">Data</span>
     <h1 data-i18n="datasets.h1">Datasets</h1>
-    <p class="lede" data-i18n="datasets.lede">A live look at the actual data behind every chart on this site &mdash; not just a summary table. Switch between datasets below.</p>
+    <p class="lede" data-i18n="datasets.lede">The full dataset behind every chart on this site &mdash; not a summary. Sort any column, filter it like a spreadsheet, and page through all the rows.</p>
   </section>
 
   <section style="margin-top:0;">
     <div class="situation">
       <h2 data-i18n="common.situation">The situation</h2>
-      <p data-i18n="datasets.sit.p">These are the three real datasets used across the dashboards, shown after the same cleaning steps described on each page. Only a small sample (12 rows) is shown here &mdash; the full raw files are intentionally excluded from the public repo (see <code>.gitignore</code>), so this preview exists specifically so a reviewer can see the real shape and quality of the data without downloading it.</p>
+      <p data-i18n="datasets.sit.p">These are the three real datasets used across the dashboards, shown after the same cleaning steps described on each page. Click a column header to sort, type or pick a value under a header to filter it, and use the pager below the table to move through all rows.</p>
     </div>
   </section>
 
@@ -74,17 +74,30 @@
           <h3 id="ds-title">&mdash;</h3>
           <p class="card-note" id="ds-note">&mdash;</p>
         </div>
-        <div class="ds-stats">
-          <div class="ds-stat"><span class="ds-stat-value" id="ds-rows">&mdash;</span><span class="ds-stat-label" data-i18n="datasets.stat.rows">rows total</span></div>
-          <div class="ds-stat"><span class="ds-stat-value" id="ds-cols">&mdash;</span><span class="ds-stat-label" data-i18n="datasets.stat.cols">columns</span></div>
-          <div class="ds-stat"><span class="ds-stat-value">12</span><span class="ds-stat-label" data-i18n="datasets.stat.shown">rows shown</span></div>
-        </div>
+        <button type="button" class="btn btn-ghost" id="ds-reset" style="font-size:12.5px; padding:7px 12px;" data-i18n="datasets.reset">Reset filters</button>
       </div>
+
+      <div id="ds-loading" class="card-note" data-i18n="datasets.loading">Loading full dataset&hellip;</div>
+
       <div class="table-scroll">
-        <table class="data-table" id="ds-table">
-          <thead></thead>
-          <tbody></tbody>
+        <table class="data-table ds-table" id="ds-table" style="display:none;">
+          <thead>
+            <tr id="ds-head-row"></tr>
+            <tr id="ds-filter-row"></tr>
+          </thead>
+          <tbody id="ds-body"></tbody>
         </table>
+      </div>
+
+      <div class="ds-pager" id="ds-pager" style="display:none;">
+        <span class="ds-pager-info" id="ds-pager-info"></span>
+        <div class="ds-pager-controls">
+          <button type="button" class="ds-page-btn" id="ds-first" title="First page">&laquo;</button>
+          <button type="button" class="ds-page-btn" id="ds-prev" title="Previous page">&lsaquo;</button>
+          <span class="ds-pager-page" id="ds-page-label">1 / 1</span>
+          <button type="button" class="ds-page-btn" id="ds-next" title="Next page">&rsaquo;</button>
+          <button type="button" class="ds-page-btn" id="ds-last" title="Last page">&raquo;</button>
+        </div>
       </div>
     </div>
   </section>
@@ -93,8 +106,8 @@
     <div class="limitations">
       <h3 data-i18n="common.limitations">Limitations</h3>
       <ul>
-        <li data-i18n="datasets.lim1">This is a 12-row sample for inspection, not the full dataset &mdash; row counts and distributions should be read from the dashboard pages, not estimated from this preview.</li>
         <li data-i18n="datasets.lim2">Values shown are post-cleaning (see each dashboard's "Data quality" notes for what changed from the raw source).</li>
+        <li data-i18n="datasets.lim3">Filtering matches on the displayed text/value; it does not re-run any model or recompute the dashboard metrics.</li>
       </ul>
     </div>
   </section>
@@ -104,19 +117,22 @@
 <footer>
   <div class="wrap">
     <div class="foot-row">
-      <span data-i18n="datasets.footer.left">Sample rows only &mdash; raw and full processed files are excluded from this public repo by design.</span>
+      <span data-i18n="datasets.footer.left2">Full cleaned datasets, loaded client-side &mdash; the raw source files stay out of this public repo by design.</span>
       <span><a href="index.html" data-i18n="common.footer.back">&larr; Back to overview</a></span>
     </div>
   </div>
 </footer>
 
+<script src="assets/i18n-data.js"></script>
 <script>
-fetch('assets/data/dataset_previews.json').then(r => r.json()).then(d => {
-  const META = {
-    churn: { titleKey: 'datasets.tab.churn', noteKey: 'datasets.note.churn' },
-    housing: { titleKey: 'datasets.tab.housing', noteKey: 'datasets.note.housing' },
-    sentiment: { titleKey: 'datasets.tab.sentiment', noteKey: 'datasets.note.sentiment' },
-  };
+(function () {
+  const FILES = { churn: 'assets/data/dataset_full_churn.json', housing: 'assets/data/dataset_full_housing.json', sentiment: 'assets/data/dataset_full_sentiment.json' };
+  const META = { churn: { titleKey: 'datasets.tab.churn', noteKey: 'datasets.note.churn' },
+                 housing: { titleKey: 'datasets.tab.housing', noteKey: 'datasets.note.housing' },
+                 sentiment: { titleKey: 'datasets.tab.sentiment', noteKey: 'datasets.note.sentiment' } };
+  const PAGE_SIZE = 50;
+  const cache = {};
+  let current = null; // { key, columns, rows, colTypes, colOptions, sortCol, sortDir, filters, page }
 
   function lang() { try { return localStorage.getItem('codveda-lang') || 'en'; } catch (e) { return 'en'; } }
   function tr(key) {
@@ -125,43 +141,163 @@ fetch('assets/data/dataset_previews.json').then(r => r.json()).then(d => {
     return entry ? entry[lang()] : '';
   }
 
-  Object.keys(d).forEach(k => {
-    document.getElementById('ds-sub-' + k).textContent = d[k].total_rows.toLocaleString() + ' rows';
-  });
-
-  function render(key) {
-    const ds = d[key];
-    document.getElementById('ds-title').textContent = tr(META[key].titleKey);
-    document.getElementById('ds-note').textContent = tr(META[key].noteKey);
-    document.getElementById('ds-rows').textContent = ds.total_rows.toLocaleString();
-    document.getElementById('ds-cols').textContent = ds.total_cols;
-
-    const thead = document.querySelector('#ds-table thead');
-    const tbody = document.querySelector('#ds-table tbody');
-    thead.innerHTML = '<tr>' + ds.columns.map(c => '<th>' + c + '</th>').join('') + '</tr>';
-    tbody.innerHTML = ds.rows.map(row =>
-      '<tr>' + row.map(v => '<td>' + v + '</td>').join('') + '</tr>'
-    ).join('');
+  function detectColumns(columns, rows) {
+    const colTypes = [];
+    const colOptions = [];
+    columns.forEach((col, i) => {
+      const values = rows.map(r => r[i]);
+      const nonEmpty = values.filter(v => v !== '' && v !== 'nan');
+      const numeric = nonEmpty.length > 0 && nonEmpty.every(v => !isNaN(parseFloat(v)) && isFinite(v));
+      colTypes.push(numeric ? 'number' : 'text');
+      const uniq = Array.from(new Set(values)).sort();
+      colOptions.push(uniq.length > 0 && uniq.length <= 12 ? uniq : null);
+    });
+    return { colTypes, colOptions };
   }
 
-  window.__renderDatasets = () => {
-    const active = document.querySelector('.ds-tab.active');
-    render(active ? active.dataset.ds : 'churn');
-  };
+  function loadDataset(key, cb) {
+    if (cache[key]) { cb(cache[key]); return; }
+    fetch(FILES[key]).then(r => r.json()).then(d => {
+      const { colTypes, colOptions } = detectColumns(d.columns, d.rows);
+      const ds = { columns: d.columns, rows: d.rows, total_rows: d.total_rows, total_cols: d.total_cols, colTypes, colOptions };
+      cache[key] = ds;
+      cb(ds);
+    });
+  }
+
+  function applyFilters(ds, filters) {
+    const activeCols = Object.keys(filters).filter(c => filters[c] !== '' && filters[c] != null);
+    if (activeCols.length === 0) return ds.rows;
+    return ds.rows.filter(row => activeCols.every(colIdx => {
+      const v = row[colIdx];
+      const f = filters[colIdx];
+      return v.toLowerCase().includes(String(f).toLowerCase());
+    }));
+  }
+
+  function sortRows(rows, colIdx, dir, type) {
+    if (colIdx == null) return rows;
+    const sorted = rows.slice().sort((a, b) => {
+      let av = a[colIdx], bv = b[colIdx];
+      if (type === 'number') { av = parseFloat(av); bv = parseFloat(bv); return av - bv; }
+      return av.localeCompare(bv);
+    });
+    if (dir === 'desc') sorted.reverse();
+    return sorted;
+  }
+
+  function render() {
+    const ds = cache[current.key];
+    const filtered = applyFilters(ds, current.filters);
+    const sorted = sortRows(filtered, current.sortCol, current.sortDir, current.sortCol != null ? ds.colTypes[current.sortCol] : null);
+    const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
+    current.page = Math.min(current.page, totalPages - 1);
+    const start = current.page * PAGE_SIZE;
+    const pageRows = sorted.slice(start, start + PAGE_SIZE);
+
+    // header row
+    const headRow = document.getElementById('ds-head-row');
+    headRow.innerHTML = ds.columns.map((c, i) => {
+      const arrow = current.sortCol === i ? (current.sortDir === 'asc' ? ' &uarr;' : ' &darr;') : '';
+      return '<th class="ds-sortable" data-col="' + i + '">' + c + arrow + '</th>';
+    }).join('');
+    headRow.querySelectorAll('.ds-sortable').forEach(th => {
+      th.addEventListener('click', () => {
+        const i = parseInt(th.dataset.col, 10);
+        if (current.sortCol === i) { current.sortDir = current.sortDir === 'asc' ? 'desc' : 'asc'; }
+        else { current.sortCol = i; current.sortDir = 'asc'; }
+        current.page = 0;
+        render();
+      });
+    });
+
+    // filter row (only build once per dataset switch to preserve input focus/values)
+    const filterRow = document.getElementById('ds-filter-row');
+    if (filterRow.children.length !== ds.columns.length) {
+      filterRow.innerHTML = ds.columns.map((c, i) => {
+        if (ds.colOptions[i]) {
+          const opts = ds.colOptions[i].map(v => '<option value="' + v + '">' + v + '</option>').join('');
+          return '<th><select data-fcol="' + i + '" class="ds-filter-input"><option value="">' + tr('datasets.filter.all') + '</option>' + opts + '</select></th>';
+        }
+        return '<th><input type="text" data-fcol="' + i + '" class="ds-filter-input" placeholder="' + tr('datasets.filter.placeholder') + '"></th>';
+      }).join('');
+      filterRow.querySelectorAll('.ds-filter-input').forEach(el => {
+        el.addEventListener('input', () => {
+          const i = parseInt(el.dataset.fcol, 10);
+          current.filters[i] = el.value;
+          current.page = 0;
+          render();
+        });
+      });
+    }
+
+    // body
+    document.getElementById('ds-body').innerHTML = pageRows.map(row =>
+      '<tr>' + row.map(v => '<td>' + v + '</td>').join('') + '</tr>'
+    ).join('');
+
+    // pager
+    const from = sorted.length === 0 ? 0 : start + 1;
+    const to = Math.min(start + PAGE_SIZE, sorted.length);
+    const infoTpl = tr('datasets.pager.info') || '';
+    document.getElementById('ds-pager-info').innerHTML = infoTpl
+      .replace('{from}', from.toLocaleString()).replace('{to}', to.toLocaleString())
+      .replace('{filtered}', sorted.length.toLocaleString()).replace('{total}', ds.total_rows.toLocaleString());
+    document.getElementById('ds-page-label').textContent = (current.page + 1) + ' / ' + totalPages;
+    document.getElementById('ds-first').disabled = current.page === 0;
+    document.getElementById('ds-prev').disabled = current.page === 0;
+    document.getElementById('ds-next').disabled = current.page >= totalPages - 1;
+    document.getElementById('ds-last').disabled = current.page >= totalPages - 1;
+    current.totalPages = totalPages;
+
+    document.getElementById('ds-title').textContent = tr(META[current.key].titleKey);
+    document.getElementById('ds-note').textContent = tr(META[current.key].noteKey);
+  }
+
+  function activate(key) {
+    document.getElementById('ds-loading').style.display = 'block';
+    document.getElementById('ds-table').style.display = 'none';
+    document.getElementById('ds-pager').style.display = 'none';
+    document.getElementById('ds-filter-row').innerHTML = '';
+    loadDataset(key, ds => {
+      current = { key, sortCol: null, sortDir: 'asc', filters: {}, page: 0 };
+      document.getElementById('ds-loading').style.display = 'none';
+      document.getElementById('ds-table').style.display = '';
+      document.getElementById('ds-pager').style.display = '';
+      render();
+    });
+  }
 
   document.querySelectorAll('.ds-tab').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.ds-tab').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      render(btn.dataset.ds);
+      activate(btn.dataset.ds);
+    });
+  });
+  document.getElementById('ds-reset').addEventListener('click', () => {
+    if (!current) return;
+    current.filters = {};
+    current.sortCol = null;
+    current.page = 0;
+    document.getElementById('ds-filter-row').innerHTML = '';
+    render();
+  });
+  document.getElementById('ds-first').addEventListener('click', () => { current.page = 0; render(); });
+  document.getElementById('ds-prev').addEventListener('click', () => { current.page = Math.max(0, current.page - 1); render(); });
+  document.getElementById('ds-next').addEventListener('click', () => { current.page = Math.min(current.totalPages - 1, current.page + 1); render(); });
+  document.getElementById('ds-last').addEventListener('click', () => { current.page = current.totalPages - 1; render(); });
+
+  Object.keys(FILES).forEach(k => {
+    fetch(FILES[k]).then(r => r.json()).then(d => {
+      document.getElementById('ds-sub-' + k).textContent = d.total_rows.toLocaleString() + ' rows';
     });
   });
 
-  render('churn');
-  document.addEventListener('codveda:langchange', () => window.__renderDatasets());
-});
+  document.addEventListener('codveda:langchange', () => { if (current) render(); });
+  activate('churn');
+})();
 </script>
-<script src="assets/i18n-data.js"></script>
 <script src="assets/controls.js"></script>
 </body>
 </html>
