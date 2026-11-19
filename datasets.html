@@ -135,8 +135,67 @@
   const META = { churn: { titleKey: 'datasets.tab.churn', noteKey: 'datasets.note.churn' },
                  housing: { titleKey: 'datasets.tab.housing', noteKey: 'datasets.note.housing' },
                  sentiment: { titleKey: 'datasets.tab.sentiment', noteKey: 'datasets.note.sentiment' } };
-  const PAGE_SIZE = 50;
+  const PAGE_SIZE = 12;
   const cache = {};
+
+  const COLUMN_INFO = {
+    churn: {
+      'State': { en: 'Two-letter US state abbreviation where the customer lives (e.g. KS = Kansas, OH = Ohio).', id: 'Kode singkatan negara bagian AS tempat pelanggan tinggal (mis. KS = Kansas, OH = Ohio).' },
+      'Account length': { en: 'How long the customer has been subscribed, in days.', id: 'Lama pelanggan sudah berlangganan, dalam hari.' },
+      'Area code': { en: "Customer's phone area code.", id: 'Kode area telepon pelanggan.' },
+      'International plan': { en: 'Whether the customer has an international calling plan.', id: 'Apakah pelanggan punya paket telepon internasional.' },
+      'Voice mail plan': { en: 'Whether the customer has a voicemail plan.', id: 'Apakah pelanggan punya paket voicemail.' },
+      'Number vmail messages': { en: 'Number of voicemail messages stored.', id: 'Jumlah pesan voicemail yang disimpan.' },
+      'Total day minutes': { en: 'Total call minutes used during daytime.', id: 'Total menit telepon yang dipakai pada siang hari.' },
+      'Total day calls': { en: 'Number of calls made during daytime.', id: 'Jumlah panggilan yang dilakukan pada siang hari.' },
+      'Total day charge': { en: 'Total bill from daytime usage ($).', id: 'Total tagihan dari pemakaian siang hari ($).' },
+      'Total eve minutes': { en: 'Total call minutes used during the evening.', id: 'Total menit telepon yang dipakai pada sore/malam awal.' },
+      'Total eve calls': { en: 'Number of calls made during the evening.', id: 'Jumlah panggilan pada sore/malam awal.' },
+      'Total eve charge': { en: 'Total bill from evening usage ($).', id: 'Total tagihan dari pemakaian sore/malam awal ($).' },
+      'Total night minutes': { en: 'Total call minutes used during the night.', id: 'Total menit telepon yang dipakai pada malam hari.' },
+      'Total night calls': { en: 'Number of calls made during the night.', id: 'Jumlah panggilan pada malam hari.' },
+      'Total night charge': { en: 'Total bill from night usage ($).', id: 'Total tagihan dari pemakaian malam hari ($).' },
+      'Total intl minutes': { en: 'Total international call minutes used.', id: 'Total menit telepon internasional yang dipakai.' },
+      'Total intl calls': { en: 'Number of international calls made.', id: 'Jumlah panggilan internasional.' },
+      'Total intl charge': { en: 'Total bill from international calls ($).', id: 'Total tagihan dari panggilan internasional ($).' },
+      'Customer service calls': { en: 'Number of times the customer called support.', id: 'Jumlah pelanggan menelepon customer service.' },
+      'Churn': { en: 'Whether the customer left (1) or stayed (0).', id: 'Apakah pelanggan berhenti berlangganan (1) atau tidak (0).' },
+      'Split': { en: 'Whether this row was used for training or testing the model.', id: 'Bagian data ini dipakai untuk training atau testing model.' },
+    },
+    housing: {
+      'CRIM': { en: 'Per-capita crime rate for the town.', id: 'Tingkat kriminalitas per kapita di area tersebut.' },
+      'ZN': { en: 'Percentage of residential land zoned for large lots (over 25,000 sq. ft.).', id: 'Persentase lahan perumahan yang dizonakan untuk lot besar (lebih dari 25.000 kaki persegi).' },
+      'INDUS': { en: 'Percentage of non-retail business (industrial) acreage in the area.', id: 'Persentase luas lahan untuk bisnis non-ritel (industri) di area tersebut.' },
+      'CHAS': { en: 'Whether the area borders the Charles River (1 = yes, 0 = no).', id: 'Apakah area berbatasan dengan Sungai Charles (1 = ya, 0 = tidak).' },
+      'NOX': { en: 'Nitrogen oxide concentration in the air &mdash; a pollution indicator.', id: 'Konsentrasi nitrogen oksida di udara &mdash; indikator polusi.' },
+      'RM': { en: 'Average number of rooms per dwelling.', id: 'Rata-rata jumlah kamar per rumah.' },
+      'AGE': { en: 'Percentage of homes built before 1940.', id: 'Persentase rumah yang dibangun sebelum tahun 1940.' },
+      'DIS': { en: 'Weighted distance to five Boston employment centers.', id: 'Jarak tertimbang ke lima pusat kerja di Boston.' },
+      'RAD': { en: 'Index of accessibility to radial highways.', id: 'Indeks kemudahan akses ke jalan tol radial.' },
+      'TAX': { en: 'Property tax rate per $10,000.', id: 'Tarif pajak properti per $10.000.' },
+      'PTRATIO': { en: 'Pupil-teacher ratio in the area.', id: 'Rasio murid-guru di area tersebut.' },
+      'B': { en: '(Excluded from modeling) a race-related demographic index from the original dataset.', id: '(Dikecualikan dari pemodelan) indeks demografis terkait ras dari dataset asli.' },
+      'LSTAT': { en: 'Percentage of lower-status population in the neighborhood.', id: 'Persentase warga berstatus sosial-ekonomi rendah di lingkungan itu.' },
+      'MEDV': { en: 'Median home value, in $000s &mdash; this is the predicted target.', id: 'Nilai median rumah, dalam ribuan $ &mdash; ini target yang diprediksi.' },
+    },
+    sentiment: {
+      'Text': { en: 'Original content of the social media post.', id: 'Isi asli post/komentar media sosial.' },
+      'Sentiment': { en: 'Original, granular emotion label from the dataset (e.g. joy, anger) before grouping.', id: 'Label emosi asli dari dataset (mis. joy, anger) sebelum dikelompokkan.' },
+      'Timestamp': { en: 'When the post was made.', id: 'Waktu post dibuat.' },
+      'User': { en: 'Account that posted it.', id: 'Nama akun yang memposting.' },
+      'Platform': { en: 'Social network the post was made on (e.g. Twitter, Instagram).', id: 'Media sosial tempat post dibuat (mis. Twitter, Instagram).' },
+      'Hashtags': { en: 'Hashtags used in the post.', id: 'Hashtag yang dipakai di post tersebut.' },
+      'Retweets': { en: 'Number of times the post was reshared.', id: 'Jumlah kali post dibagikan ulang.' },
+      'Likes': { en: 'Number of likes the post received.', id: 'Jumlah like yang didapat post.' },
+      'Country': { en: 'Country the user posted from.', id: 'Negara asal pengguna.' },
+      'Year': { en: 'Year the post was made.', id: 'Tahun post dibuat.' },
+      'Month': { en: 'Month the post was made.', id: 'Bulan post dibuat.' },
+      'Day': { en: 'Day of the month the post was made.', id: 'Tanggal post dibuat.' },
+      'Hour': { en: 'Hour of day the post was made.', id: 'Jam post dibuat.' },
+      'Sentiment_normalized': { en: 'Lowercase version of the original Sentiment label.', id: 'Versi huruf kecil dari label Sentiment asli.' },
+      'Polarity': { en: 'The Sentiment label grouped into Positive/Negative/Neutral &mdash; this is what the model actually uses.', id: 'Hasil pengelompokan Sentiment jadi Positive/Negative/Neutral &mdash; ini yang dipakai untuk model.' },
+    },
+  };
   let current = null; // { key, columns, rows, colTypes, colOptions, sortCol, sortDir, filters, page }
 
   function lang() { try { return localStorage.getItem('codveda-lang') || 'en'; } catch (e) { return 'en'; } }
@@ -254,9 +313,14 @@
       } else {
         filterHtml = '<input type="text" class="ds-filter-input" data-fcol="' + i + '" placeholder="' + tr('datasets.filter.placeholder') + '">';
       }
+      const infoEntry = (COLUMN_INFO[current.key] || {})[c];
+      const infoHtml = infoEntry
+        ? '<i class="ds-th-info" tabindex="0" title="' + String(infoEntry[lang()]).replace(/&mdash;/g, '—').replace(/"/g, '&quot;') + '">i</i>'
+        : '';
       return '<th class="ds-th">'
         + '<div class="ds-th-row">'
         + '<span class="ds-th-label ds-sortable" data-col="' + i + '">' + c + '<span class="ds-sort-arrow" data-col="' + i + '"></span></span>'
+        + infoHtml
         + '</div>'
         + '<div class="ds-th-filter">' + filterHtml + '</div>'
         + '</th>';

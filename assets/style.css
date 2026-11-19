@@ -770,6 +770,23 @@ footer .foot-row { display: flex; justify-content: space-between; flex-wrap: wra
 }
 .ds-th-label:hover { color: var(--text-primary); }
 .ds-sort-arrow { font-size: 10px; }
+.ds-th-info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  margin-left: 4px;
+  border-radius: 50%;
+  border: 1px solid var(--text-muted);
+  color: var(--text-muted);
+  font-size: 9px;
+  font-style: normal;
+  line-height: 1;
+  cursor: help;
+  vertical-align: middle;
+}
+.ds-th-info:hover { color: var(--pink); border-color: var(--pink); }
 .ds-th-filter { opacity: 0.55; transition: opacity .15s ease; }
 .ds-th-filter:focus-within, .ds-th-filter:hover { opacity: 1; }
 .ds-filter-input {

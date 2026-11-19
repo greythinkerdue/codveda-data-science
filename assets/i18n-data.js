@@ -20,28 +20,27 @@ const I18N = {
       nlp: { en: "NLP &middot; Text classification &middot; Case study", id: "NLP &middot; Klasifikasi teks &middot; Studi kasus" },
     },
     footer: {
-      left: { en: "Codveda Data Science Task Portfolio &middot; built from the supplied Codveda datasets and task list.", id: "Portofolio Tugas Codveda Data Science &middot; dibuat dari dataset dan daftar tugas dari Codveda." },
+      left: { en: "Codveda Data Science Task Portfolio &middot; built from the supplied Codveda datasets and task list.", id: "Portofolio Tugas Codveda Data Science &middot; oleh Cecilya C. Sianturi." },
       source: { en: "Source on GitHub", id: "Source code di GitHub" },
-      brief: { en: "Task brief (PDF)", id: "Dokumen tugas (PDF)" },
       back: { en: "&larr; Back to overview", id: "&larr; Kembali ke ringkasan" },
     },
   },
 
   index: {
     eyebrow: { en: "Codveda Data Science Internship &middot; Mar&ndash;Apr 2026", id: "Internship Data Science Codveda &middot; Mar&ndash;Apr 2026" },
-    h1: { en: "From raw telecom, housing &amp; social data to decisions a business can act on.", id: "Dari data mentah telekomunikasi, housing, dan media sosial, jadi keputusan yang bisa langsung dipakai bisnis." },
-    lede: { en: "Six tasks across three real-world datasets &mdash; cleaned, modeled, and turned into a churn retention dashboard, a home-value estimator, and a social sentiment triage model. Built to show the full pipeline: data quality, modeling trade-offs, and the business actions each result actually supports.", id: "Enam tugas dari tiga dataset asli &mdash; dibersihkan, dimodelkan, lalu dijadikan dashboard retensi churn, estimator nilai rumah, dan model penyortir sentimen sosial. Dibuat untuk menunjukkan seluruh prosesnya: kualitas data, plus-minus tiap model, dan aksi bisnis yang benar-benar didukung tiap hasil." },
+    h1: { en: "From raw telecom, housing &amp; social data to decisions a business can act on.", id: "Dari tumpukan data Telkom, properti, hingga medsos, langsung jadi strategi bisnis yang siap dipertimbangkan." },
+    lede: { en: "Six tasks across three real-world datasets &mdash; cleaned, modeled, and turned into a churn retention dashboard, a home-value estimator, and a social sentiment triage model. Built to show the full pipeline: data quality, modeling trade-offs, and the business actions each result actually supports.", id: "Portofolio ini berisi enam tugas yang saya kerjakan selama Data Science Internship di Codveda. Mulai dari membersihkan dan mengeksplorasi data pelanggan, membandingkan model regresi dan klasifikasi, mengolah teks media sosial, hingga membangun neural network. Setiap proyek menampilkan proses pengerjaan, hasil evaluasi, perbandingan model, serta limitasi yang ditemukan selama proses analisis." },
     cta: {
       churn: { en: "Open the churn dashboard &rarr;", id: "Buka dashboard churn &rarr;" },
       notebook: { en: "View notebook", id: "Lihat notebook" },
       github: { en: "GitHub repo", id: "Repo GitHub" },
     },
     sit: {
-      intro: { en: "This portfolio stands in for three analytics requests a data team gets asked to solve:", id: "Portofolio ini mencontohkan tiga permintaan yang biasa diterima tim data:" },
-      p1: { en: "<strong>1. A telecom operator</strong> is losing <strong>14.49%</strong> of its subscriber base and wants to know who is at risk and why &mdash; not just a churn score, but a reason a retention team can act on.", id: "<strong>1. Perusahaan telekomunikasi</strong> kehilangan <strong>14,49%</strong> pelanggannya dan ingin tahu siapa yang berisiko dan kenapa &mdash; bukan cuma angka churn, tapi alasan yang bisa langsung dipakai tim retensi untuk bertindak." },
-      p2: { en: "<strong>2. A real-estate desk</strong> wants a quick, explainable estimate of home value from structural and neighborhood features, without relying on a black box.", id: "<strong>2. Tim real-estate</strong> ingin estimasi harga rumah yang cepat dan bisa dijelaskan, dilihat dari kondisi rumah dan lingkungannya, tanpa pakai model black box (model yang hasilnya sulit dijelaskan)." },
-      p3: { en: "<strong>3. A social/brand team</strong> is drowning in unlabeled mentions and wants mentions auto-sorted into positive, negative, and neutral so human reviewers only touch what matters.", id: "<strong>3. Tim media sosial/brand</strong> kebanjiran komentar yang belum dikategorikan, dan ingin komentar itu otomatis dipilah jadi positif, negatif, dan netral, supaya tim yang memeriksa cukup fokus ke yang penting saja." },
-      p4: { en: "Each section below answers one of these with real metrics, real trade-offs, and a stated limitation &mdash; not just a chart.", id: "Tiap bagian di bawah menjawab salah satu dari itu, lengkap dengan angka nyata, plus-minusnya, dan keterbatasannya &mdash; bukan cuma chart saja." },
+      intro: { en: "This portfolio sums up how I approached three business problems that regularly land on a data team's desk:", id: "Portofolio ini merangkum cara saya menyelesaikan tiga masalah bisnis yang sering mampir ke meja tim data:" },
+      p1: { en: "<strong>1. Stopping customers from leaving (Telkom)</strong>: The company was losing <strong>14.49%</strong> of its subscribers. I dug into who was at risk of leaving and why, giving the retention team something concrete to act on.", id: "<strong>1. Mencegah pelanggan cabut (Telkom)</strong>: Perusahaan kehilangan <strong>14,49%</strong> pelanggan. Saya mencari tahu siapa yang berisiko pergi dan pemicunya, agar tim retensi punya pegangan nyata untuk bertindak." },
+      p2: { en: "<strong>2. A transparent home-value estimate (Real estate)</strong>: Estimating a home's price quickly from its physical condition and surroundings, without relying on a black box model that's hard to explain to a non-technical audience.", id: "<strong>2. Estimasi harga rumah yang transparan (Properti)</strong>: Menebak harga rumah dari kondisi fisik dan lingkungannya secara cepat, tanpa bergantung pada model sistem tertutup yang sulit dijelaskan ke orang awam." },
+      p3: { en: "<strong>3. Auto-sorting comments (Social media)</strong>: Grouping thousands of comments into positive, negative, and neutral sentiment so the brand team can focus on the issues that matter most first.", id: "<strong>3. Pilah komentar otomatis (Medsos)</strong>: Mengelompokkan ribuan komentar ke dalam sentimen positif, negatif, dan netral supaya tim brand bisa fokus menangani isu yang paling penting dulu." },
+      p4: { en: "Every case study below is worked through in full using real data, including the trade-offs and limitations &mdash; not just a pile of charts.", id: "Semua studi kasus di bawah dibahas tuntas pakai data asli, lengkap dengan kelebihan, kekurangan, dan batasannya &mdash; bukan cuma kumpulan chart semata." },
     },
     models: {
       h2: { en: "Four models, one pipeline", id: "Empat model, satu pipeline" },
@@ -134,7 +133,7 @@ const I18N = {
     kpi4: { label: { en: "Highest-risk segment", id: "Segmen berisiko tertinggi" }, sub: { en: "Int'l plan + 4&plus; service calls &mdash; 4.7&times; the base rate", id: "Paket int'l + 4&plus; panggilan layanan &mdash; 4,7&times; dari tingkat dasar" } },
     est: {
       h3: { en: "Estimate a subscriber's churn risk", id: "Estimasi risiko churn seorang pelanggan" },
-      p: { en: "Drag the controls to build a customer profile. The estimate is read directly from the real segment rates charted below &mdash; not a black box.", id: "Geser kontrol di bawah untuk membuat profil pelanggan. Hasilnya diambil langsung dari data churn asli di bawah &mdash; bukan tebakan dari model yang tidak bisa dijelaskan (black box)." },
+      p: { en: "Drag the controls to build a customer profile. The estimate is read directly from the real segment rates charted below &mdash; not a black box.", id: "Geser kontrol di bawah untuk membuat profil pelanggan. Hasilnya diambil langsung dari data churn asli di bawah &mdash; bukan tebakan dari model yang tidak bisa dijelaskan (sistem tertutup)." },
       plan_label: { en: "International plan", id: "Paket internasional" },
       vm_label: { en: "Voicemail plan", id: "Paket voicemail" },
       cs_label: { en: "Customer service calls:", id: "Panggilan customer service:" },
@@ -188,10 +187,10 @@ const I18N = {
 
   housing: {
     h1: { en: "Home Value Estimator", id: "Estimator Nilai Rumah" },
-    lede: { en: "Can structural and neighborhood features alone give a real-estate desk a quick, explainable value estimate &mdash; without relying on a black box?", id: "Bisakah kondisi rumah dan lingkungannya saja memberi tim real-estate estimasi harga yang cepat dan bisa dijelaskan &mdash; tanpa pakai model black box (yang hasilnya sulit dijelaskan)?" },
+    lede: { en: "Can structural and neighborhood features alone give a real-estate desk a quick, explainable value estimate &mdash; without relying on a black box?", id: "Menaksir harga rumah secara cepat dan transparan hanya dari kondisi bangunan dan lingkungan &mdash; tanpa pakai sistem tertutup yang rumit." },
     sit: {
-      p1: { en: "506 homes, 14 features. The goal isn't just low error &mdash; it's knowing <strong>which inputs</strong> actually carry the signal, so a lightweight valuation tool collects the right data instead of everything available.", id: "506 rumah, 14 data. Tujuannya bukan cuma supaya error-nya kecil &mdash; tapi supaya tahu <strong>data mana</strong> yang benar-benar penting, jadi alat penilai harga cukup kumpulkan data yang perlu saja, tidak semuanya." },
-      p2: { en: "Note: this is the historical Boston Housing benchmark (1978), not current market data, and the race-derived <code>B</code> feature was excluded from modeling on ethical grounds.", id: "Catatan: ini data lama Boston Housing (1978), bukan data pasar sekarang. Data <code>B</code> yang berkaitan dengan ras sengaja tidak dipakai karena alasan etika." },
+      p1: { en: "506 homes, 14 features. The goal isn't just low error &mdash; it's knowing <strong>which inputs</strong> actually carry the signal, so a lightweight valuation tool collects the right data instead of everything available.", id: "Dari 506 data rumah dengan 14 faktor, fokus utamanya bukan cuma bikin prediksi seakurat mungkin. Saya ingin menyaring faktor mana saja yang paling menentukan harga, supaya agen properti di lapangan cukup mengumpulkan data yang benar-benar krusial." },
+      p2: { en: "Note: this is the historical Boston Housing benchmark (1978), not current market data, and the race-derived <code>B</code> feature was excluded from modeling on ethical grounds.", id: "Catatan: Studi kasus ini memakai dataset klasik Boston Housing (1978), bukan harga pasar saat ini. Faktor <code>B</code> yang berkaitan dengan ras sengaja dihapus demi alasan etika." },
     },
     kpi1: { label: { en: "Best R&sup2; (Decision Tree)", id: "R&sup2; terbaik (Decision Tree)" } },
     kpi2: { label: { en: "Best MAE (Random Forest)", id: "MAE terbaik (Random Forest)" }, sub: { en: "in $000s &mdash; R&sup2; 0.867", id: "dalam ribuan $ &mdash; R&sup2; 0,867" } },
