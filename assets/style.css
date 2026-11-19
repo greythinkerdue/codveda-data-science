@@ -651,3 +651,53 @@ footer .foot-row { display: flex; justify-content: space-between; flex-wrap: wra
 .risk-badge.risk-low .risk-pct, .risk-badge.risk-low .risk-label { color: var(--green); }
 .risk-badge.risk-medium .risk-pct, .risk-badge.risk-medium .risk-label { color: var(--gold); }
 .risk-badge.risk-high .risk-pct, .risk-badge.risk-high .risk-label { color: var(--pink); }
+
+/* ---------- Datasets page ---------- */
+.ds-tabs { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.ds-tab {
+  flex: 1;
+  min-width: 140px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-hairline);
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--font-body);
+}
+.ds-tab-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+.ds-tab-sub { font-size: 12px; color: var(--text-muted); }
+.ds-tab.active { border-color: var(--pink); background: var(--pink-soft); }
+.ds-tab.active .ds-tab-title { color: var(--pink); }
+.ds-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.ds-head h3 { margin: 0 0 4px; font-size: 16px; }
+.ds-stats { display: flex; gap: 20px; flex: none; }
+.ds-stat { display: flex; flex-direction: column; align-items: flex-end; }
+.ds-stat-value { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--text-primary); }
+.ds-stat-label { font-size: 11px; color: var(--text-muted); }
+#ds-table th, #ds-table td { white-space: nowrap; }
+.see-data-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--pink);
+  text-decoration: none;
+}
+.see-data-link:hover { text-decoration: underline; }
+@media (max-width: 600px) {
+  .ds-tab { min-width: 100%; }
+  .ds-stats { gap: 14px; }
+}

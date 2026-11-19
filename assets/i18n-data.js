@@ -6,6 +6,7 @@ const I18N = {
       churn: { en: "Churn Dashboard", id: "Dashboard Churn" },
       housing: { en: "Housing", id: "Housing" },
       nlp: { en: "NLP", id: "NLP" },
+      datasets: { en: "Datasets", id: "Dataset" },
     },
     situation: { en: "The situation", id: "Situasinya" },
     try: { en: "Try it yourself", id: "Coba sendiri" },
@@ -80,7 +81,33 @@ const I18N = {
       row1: { name: { en: "Telecom churn (80%+20%)", id: "Churn telekomunikasi (80%+20%)" }, notes: { en: "Trimmed categorical strings; converted Churn to 0/1; IQR outliers flagged and retained when plausible.", id: "Merapikan teks kategori; mengubah Churn jadi 0/1; outlier ditandai dan tetap dipakai kalau masih masuk akal." } },
       row2: { name: { en: "Social media sentiment", id: "Sentimen media sosial" }, notes: { en: "Removed exported index columns; trimmed text; parsed timestamps; normalized emotion labels.", id: "Menghapus kolom index bawaan ekspor; merapikan teks; membaca timestamp; menyeragamkan label emosi." } },
       row3: { name: { en: "Housing prediction", id: "Prediksi housing" }, notes: { en: "Assigned conventional Boston Housing column names to a headerless 14-column file.", id: "Memberi nama kolom standar Boston Housing ke file 14 kolom yang tadinya tanpa judul kolom." } },
+      see_data: { en: "Curious what the data itself looks like? Click here &rarr;", id: "Kalau penasaran dengan isi datasetnya, klik di sini &rarr;" },
     },
+  },
+
+  datasets: {
+    eyebrow: { en: "Data", id: "Data" },
+    h1: { en: "Datasets", id: "Dataset" },
+    lede: { en: "A live look at the actual data behind every chart on this site &mdash; not just a summary table. Switch between datasets below.", id: "Lihat langsung data asli di balik setiap chart di situs ini &mdash; bukan cuma tabel ringkasan. Pindah-pindah dataset di bawah." },
+    sit: { p: { en: "These are the three real datasets used across the dashboards, shown after the same cleaning steps described on each page. Only a small sample (12 rows) is shown here &mdash; the full raw files are intentionally excluded from the public repo (see <code>.gitignore</code>), so this preview exists specifically so a reviewer can see the real shape and quality of the data without downloading it.", id: "Ini tiga dataset asli yang dipakai di semua dashboard, ditampilkan setelah melalui proses pembersihan yang sama seperti dijelaskan di tiap halaman. Yang ditampilkan di sini cuma sample kecil (12 baris) &mdash; file mentah lengkapnya memang sengaja tidak dimasukkan ke repo publik (lihat <code>.gitignore</code>), jadi preview ini dibuat khusus supaya orang bisa lihat bentuk dan kualitas data aslinya tanpa perlu download." } },
+    tab: {
+      churn: { en: "Telecom churn", id: "Churn telekomunikasi" },
+      housing: { en: "Housing", id: "Housing" },
+      sentiment: { en: "Social sentiment", id: "Sentimen sosial" },
+    },
+    note: {
+      churn: { en: "3,333 telecom subscribers with usage, billing, and plan details.", id: "3.333 pelanggan telekomunikasi lengkap dengan data pemakaian, tagihan, dan jenis paket." },
+      housing: { en: "506 homes with structural and neighborhood features (Boston Housing benchmark).", id: "506 rumah dengan data struktural dan lingkungan (benchmark Boston Housing)." },
+      sentiment: { en: "732 social media posts with platform, engagement, and sentiment labels.", id: "732 post media sosial lengkap dengan platform, engagement, dan label sentimen." },
+    },
+    stat: {
+      rows: { en: "rows total", id: "total baris" },
+      cols: { en: "columns", id: "kolom" },
+      shown: { en: "rows shown", id: "baris ditampilkan" },
+    },
+    lim1: { en: "This is a 12-row sample for inspection, not the full dataset &mdash; row counts and distributions should be read from the dashboard pages, not estimated from this preview.", id: "Ini cuma sample 12 baris buat dilihat-lihat, bukan dataset lengkapnya &mdash; jumlah baris dan distribusi datanya sebaiknya dilihat dari halaman dashboard, bukan ditebak dari preview ini." },
+    lim2: { en: "Values shown are post-cleaning (see each dashboard's \"Data quality\" notes for what changed from the raw source).", id: "Nilai yang ditampilkan sudah melalui proses pembersihan (lihat catatan \"Data quality\" di tiap dashboard buat tahu apa yang diubah dari sumber aslinya)." },
+    footer: { left: { en: "Sample rows only &mdash; raw and full processed files are excluded from this public repo by design.", id: "Cuma sample baris &mdash; file mentah dan file olahan lengkapnya memang sengaja tidak dimasukkan ke repo publik ini." } },
   },
 
   churn: {
