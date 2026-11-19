@@ -1,8 +1,10 @@
 // Shared Chart.js configuration + helpers for the Codveda portfolio site.
+// Note: no red/green/orange/yellow by design (those read as literal good/bad
+// signals). `gold` now holds the cobalt blue role, `green` the violet role.
 const COLOR = {
-  pink: '#e0447f',
-  gold: '#b8872e',
-  green: '#3e9b68',
+  pink: '#ff2e7a',
+  gold: '#1e6fd6',
+  green: '#a855f7',
 };
 
 function cssVar(name) {
@@ -190,7 +192,7 @@ function renderScatterChart(canvasId, points, opts = {}) {
         {
           label: 'Test samples',
           data: points,
-          backgroundColor: 'rgba(62, 155, 104, 0.55)',
+          backgroundColor: 'rgba(168, 85, 247, 0.55)',
           pointRadius: 4,
           pointHoverRadius: 6,
         },
@@ -198,7 +200,7 @@ function renderScatterChart(canvasId, points, opts = {}) {
           label: 'Perfect prediction',
           type: 'line',
           data: [{ x: 0, y: 0 }, { x: max, y: max }],
-          borderColor: 'rgba(224, 68, 127, 0.55)',
+          borderColor: 'rgba(255, 46, 122, 0.55)',
           borderWidth: 2,
           borderDash: [5, 4],
           pointRadius: 0,

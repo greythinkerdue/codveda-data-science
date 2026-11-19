@@ -6,37 +6,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Home Value Estimator &middot; Codveda</title>
 <meta name="description" content="Regression case study: Boston Housing price estimation with feature importance and model comparison.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%2314171c%22/><circle cx=%2213%22 cy=%2216%22 r=%227%22 fill=%22%23e0447f%22/><circle cx=%2221%22 cy=%2216%22 r=%227%22 fill=%22%233e9b68%22 fill-opacity=%220.85%22/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%23130f1f%22/><circle cx=%2213%22 cy=%2216%22 r=%227%22 fill=%22%23ff2e7a%22/><circle cx=%2221%22 cy=%2216%22 r=%227%22 fill=%22%23a855f7%22 fill-opacity=%220.85%22/></svg>">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-<nav class="nav">
-  <div class="wrap">
-    <a class="brand" href="index.html"><span class="brand-mark"></span>Codveda Analytics</a>
-    <ul class="navlinks">
-      <li><a href="index.html" data-i18n="nav.overview">Overview</a></li>
-      <li><a href="churn-dashboard.html" data-i18n="nav.churn">Churn Dashboard</a></li>
-      <li><a href="housing.html" class="active" data-i18n="nav.housing">Housing</a></li>
-      <li><a href="nlp.html" data-i18n="nav.nlp">NLP</a></li>
-      <li><a href="datasets.html" data-i18n="nav.datasets">Datasets</a></li>
-    </ul>
-    <div class="nav-controls">
-      <div class="lang-toggle">
-        <button type="button" class="lang-btn" data-lang="id">ID</button>
-        <button type="button" class="lang-btn" data-lang="en">EN</button>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="sidebar-brand" href="index.html">
+      <span class="sidebar-brand-mark"></span>
+      <span class="sidebar-brand-name">Codveda Analytics</span>
+    </a>
+    <nav class="sidebar-nav">
+      <a href="index.html"><span class="nav-num">00</span><span data-i18n="nav.overview">Overview</span></a>
+      <a href="churn-dashboard.html"><span class="nav-num">01</span><span data-i18n="nav.churn">Churn Dashboard</span></a>
+      <a href="housing.html" class="active"><span class="nav-num">02</span><span data-i18n="nav.housing">Housing</span></a>
+      <a href="nlp.html"><span class="nav-num">03</span><span data-i18n="nav.nlp">NLP</span></a>
+      <a href="datasets.html"><span class="nav-num">04</span><span data-i18n="nav.datasets">Datasets</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-row">
+        <div class="lang-toggle">
+          <button type="button" class="lang-btn" data-lang="id">ID</button>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+        </div>
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle light/dark theme">
+          <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+          <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
       </div>
-      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle light/dark theme">
-        <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
-        <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      </button>
       <a class="avatar-link" href="https://github.com/greythinkerdue" target="_blank" rel="noopener" title="greythinkerdue on GitHub">
         <img src="https://github.com/greythinkerdue.png?size=64" alt="greythinkerdue on GitHub">
       </a>
     </div>
-  </div>
-</nav>
-
+  </aside>
+  <main class="main">
 <div class="wrap">
 
   <section class="hero" style="padding-bottom:4px;">
@@ -152,6 +156,8 @@
     </div>
   </div>
 </footer>
+</main>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="assets/charts.js"></script>
