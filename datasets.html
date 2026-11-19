@@ -83,7 +83,6 @@
         <table class="data-table ds-table" id="ds-table" style="display:none;">
           <thead>
             <tr id="ds-head-row"></tr>
-            <tr id="ds-filter-row"></tr>
           </thead>
           <tbody id="ds-body"></tbody>
         </table>
@@ -141,6 +140,8 @@
     return entry ? entry[lang()] : '';
   }
 
+  const CATEGORY_MAX = 60;
+
   function detectColumns(columns, rows) {
     const colTypes = [];
     const colOptions = [];
@@ -148,9 +149,17 @@
       const values = rows.map(r => r[i]);
       const nonEmpty = values.filter(v => v !== '' && v !== 'nan');
       const numeric = nonEmpty.length > 0 && nonEmpty.every(v => !isNaN(parseFloat(v)) && isFinite(v));
-      colTypes.push(numeric ? 'number' : 'text');
       const uniq = Array.from(new Set(values)).sort();
-      colOptions.push(uniq.length > 0 && uniq.length <= 12 ? uniq : null);
+      if (numeric) {
+        colTypes.push('number');
+        colOptions.push(null);
+      } else if (uniq.length > 0 && uniq.length <= CATEGORY_MAX) {
+        colTypes.push('category');
+        colOptions.push(uniq);
+      } else {
+        colTypes.push('text');
+        colOptions.push(null);
+      }
     });
     return { colTypes, colOptions };
   }
@@ -166,11 +175,31 @@
   }
 
   function applyFilters(ds, filters) {
-    const activeCols = Object.keys(filters).filter(c => filters[c] !== '' && filters[c] != null);
+    const activeCols = Object.keys(filters).filter(c => {
+      const f = filters[c];
+      if (f == null) return false;
+      if (ds.colTypes[c] === 'number') return f.op && f.val !== '' && f.val != null;
+      return f !== '';
+    });
     if (activeCols.length === 0) return ds.rows;
-    return ds.rows.filter(row => activeCols.every(colIdx => {
-      const v = row[colIdx];
+    return ds.rows.filter(row => activeCols.every(colIdxStr => {
+      const colIdx = colIdxStr;
       const f = filters[colIdx];
+      if (ds.colTypes[colIdx] === 'number') {
+        const cell = parseFloat(row[colIdx]);
+        const target = parseFloat(f.val);
+        if (isNaN(cell) || isNaN(target)) return true;
+        switch (f.op) {
+          case '=': return cell === target;
+          case '!=': return cell !== target;
+          case '>': return cell > target;
+          case '>=': return cell >= target;
+          case '<': return cell < target;
+          case '<=': return cell <= target;
+          default: return true;
+        }
+      }
+      const v = row[colIdx];
       return v.toLowerCase().includes(String(f).toLowerCase());
     }));
   }
@@ -186,7 +215,73 @@
     return sorted;
   }
 
-  function render() {
+  function restoreFilterValues(ds) {
+    Object.keys(current.filters).forEach(i => {
+      const f = current.filters[i];
+      if (ds.colTypes[i] === 'number') {
+        const opEl = document.querySelector('.ds-filter-input[data-fcol="' + i + '"][data-fkind="op"]');
+        const valEl = document.querySelector('.ds-filter-input[data-fcol="' + i + '"][data-fkind="val"]');
+        if (opEl && f) opEl.value = f.op || '';
+        if (valEl && f) valEl.value = f.val || '';
+      } else {
+        const el = document.querySelector('.ds-filter-input[data-fcol="' + i + '"]');
+        if (el) el.value = f;
+      }
+    });
+  }
+
+  function buildHeader(ds) {
+    const headRow = document.getElementById('ds-head-row');
+    headRow.innerHTML = ds.columns.map((c, i) => {
+      let filterHtml;
+      if (ds.colTypes[i] === 'number') {
+        filterHtml = '<span class="ds-filter-num">'
+          + '<select class="ds-filter-input" data-fcol="' + i + '" data-fkind="op" title="' + tr('datasets.filter.operator') + '">'
+          + '<option value="">&mdash;</option><option value="=">=</option><option value="!=">&ne;</option>'
+          + '<option value=">">&gt;</option><option value=">=">&ge;</option><option value="<">&lt;</option><option value="<=">&le;</option>'
+          + '</select>'
+          + '<input type="number" class="ds-filter-input ds-filter-num-val" data-fcol="' + i + '" data-fkind="val" placeholder="' + tr('datasets.filter.num') + '">'
+          + '</span>';
+      } else if (ds.colTypes[i] === 'category') {
+        const opts = ds.colOptions[i].map(v => '<option value="' + v + '">' + v + '</option>').join('');
+        filterHtml = '<select class="ds-filter-input" data-fcol="' + i + '"><option value="">' + tr('datasets.filter.all') + '</option>' + opts + '</select>';
+      } else {
+        filterHtml = '<input type="text" class="ds-filter-input" data-fcol="' + i + '" placeholder="' + tr('datasets.filter.placeholder') + '">';
+      }
+      return '<th class="ds-th">'
+        + '<div class="ds-th-row">'
+        + '<span class="ds-th-label ds-sortable" data-col="' + i + '">' + c + '<span class="ds-sort-arrow" data-col="' + i + '"></span></span>'
+        + '</div>'
+        + '<div class="ds-th-filter">' + filterHtml + '</div>'
+        + '</th>';
+    }).join('');
+
+    headRow.querySelectorAll('.ds-th-label').forEach(label => {
+      label.addEventListener('click', () => {
+        const i = label.dataset.col;
+        if (current.sortCol === i) { current.sortDir = current.sortDir === 'asc' ? 'desc' : 'asc'; }
+        else { current.sortCol = i; current.sortDir = 'asc'; }
+        current.page = 0;
+        renderData();
+      });
+    });
+
+    headRow.querySelectorAll('.ds-filter-input').forEach(el => {
+      el.addEventListener('input', () => {
+        const i = el.dataset.fcol;
+        if (el.dataset.fkind) {
+          current.filters[i] = current.filters[i] || {};
+          current.filters[i][el.dataset.fkind] = el.value;
+        } else {
+          current.filters[i] = el.value;
+        }
+        current.page = 0;
+        renderData();
+      });
+    });
+  }
+
+  function renderData() {
     const ds = cache[current.key];
     const filtered = applyFilters(ds, current.filters);
     const sorted = sortRows(filtered, current.sortCol, current.sortDir, current.sortCol != null ? ds.colTypes[current.sortCol] : null);
@@ -195,48 +290,15 @@
     const start = current.page * PAGE_SIZE;
     const pageRows = sorted.slice(start, start + PAGE_SIZE);
 
-    // header row
-    const headRow = document.getElementById('ds-head-row');
-    headRow.innerHTML = ds.columns.map((c, i) => {
-      const arrow = current.sortCol === i ? (current.sortDir === 'asc' ? ' &uarr;' : ' &darr;') : '';
-      return '<th class="ds-sortable" data-col="' + i + '">' + c + arrow + '</th>';
-    }).join('');
-    headRow.querySelectorAll('.ds-sortable').forEach(th => {
-      th.addEventListener('click', () => {
-        const i = parseInt(th.dataset.col, 10);
-        if (current.sortCol === i) { current.sortDir = current.sortDir === 'asc' ? 'desc' : 'asc'; }
-        else { current.sortCol = i; current.sortDir = 'asc'; }
-        current.page = 0;
-        render();
-      });
+    document.querySelectorAll('.ds-sort-arrow').forEach(s => {
+      const i = s.dataset.col;
+      s.innerHTML = current.sortCol === i ? (current.sortDir === 'asc' ? ' &uarr;' : ' &darr;') : '';
     });
 
-    // filter row (only build once per dataset switch to preserve input focus/values)
-    const filterRow = document.getElementById('ds-filter-row');
-    if (filterRow.children.length !== ds.columns.length) {
-      filterRow.innerHTML = ds.columns.map((c, i) => {
-        if (ds.colOptions[i]) {
-          const opts = ds.colOptions[i].map(v => '<option value="' + v + '">' + v + '</option>').join('');
-          return '<th><select data-fcol="' + i + '" class="ds-filter-input"><option value="">' + tr('datasets.filter.all') + '</option>' + opts + '</select></th>';
-        }
-        return '<th><input type="text" data-fcol="' + i + '" class="ds-filter-input" placeholder="' + tr('datasets.filter.placeholder') + '"></th>';
-      }).join('');
-      filterRow.querySelectorAll('.ds-filter-input').forEach(el => {
-        el.addEventListener('input', () => {
-          const i = parseInt(el.dataset.fcol, 10);
-          current.filters[i] = el.value;
-          current.page = 0;
-          render();
-        });
-      });
-    }
-
-    // body
     document.getElementById('ds-body').innerHTML = pageRows.map(row =>
       '<tr>' + row.map(v => '<td>' + v + '</td>').join('') + '</tr>'
     ).join('');
 
-    // pager
     const from = sorted.length === 0 ? 0 : start + 1;
     const to = Math.min(start + PAGE_SIZE, sorted.length);
     const infoTpl = tr('datasets.pager.info') || '';
@@ -258,13 +320,13 @@
     document.getElementById('ds-loading').style.display = 'block';
     document.getElementById('ds-table').style.display = 'none';
     document.getElementById('ds-pager').style.display = 'none';
-    document.getElementById('ds-filter-row').innerHTML = '';
     loadDataset(key, ds => {
       current = { key, sortCol: null, sortDir: 'asc', filters: {}, page: 0 };
       document.getElementById('ds-loading').style.display = 'none';
       document.getElementById('ds-table').style.display = '';
       document.getElementById('ds-pager').style.display = '';
-      render();
+      buildHeader(ds);
+      renderData();
     });
   }
 
@@ -280,13 +342,13 @@
     current.filters = {};
     current.sortCol = null;
     current.page = 0;
-    document.getElementById('ds-filter-row').innerHTML = '';
-    render();
+    buildHeader(cache[current.key]);
+    renderData();
   });
-  document.getElementById('ds-first').addEventListener('click', () => { current.page = 0; render(); });
-  document.getElementById('ds-prev').addEventListener('click', () => { current.page = Math.max(0, current.page - 1); render(); });
-  document.getElementById('ds-next').addEventListener('click', () => { current.page = Math.min(current.totalPages - 1, current.page + 1); render(); });
-  document.getElementById('ds-last').addEventListener('click', () => { current.page = current.totalPages - 1; render(); });
+  document.getElementById('ds-first').addEventListener('click', () => { current.page = 0; renderData(); });
+  document.getElementById('ds-prev').addEventListener('click', () => { current.page = Math.max(0, current.page - 1); renderData(); });
+  document.getElementById('ds-next').addEventListener('click', () => { current.page = Math.min(current.totalPages - 1, current.page + 1); renderData(); });
+  document.getElementById('ds-last').addEventListener('click', () => { current.page = current.totalPages - 1; renderData(); });
 
   Object.keys(FILES).forEach(k => {
     fetch(FILES[k]).then(r => r.json()).then(d => {
@@ -294,7 +356,13 @@
     });
   });
 
-  document.addEventListener('codveda:langchange', () => { if (current) render(); });
+  document.addEventListener('codveda:langchange', () => {
+    if (!current) return;
+    const ds = cache[current.key];
+    buildHeader(ds);
+    restoreFilterValues(ds);
+    renderData();
+  });
   activate('churn');
 })();
 </script>

@@ -95,6 +95,8 @@ const I18N = {
     filter: {
       all: { en: "All", id: "Semua" },
       placeholder: { en: "Filter&hellip;", id: "Filter&hellip;" },
+      num: { en: "value", id: "nilai" },
+      operator: { en: "Operator", id: "Operator" },
     },
     pager: {
       info: { en: "Showing {from}&ndash;{to} of {filtered} rows (filtered from {total} total)", id: "Menampilkan {from}&ndash;{to} dari {filtered} baris (hasil filter dari {total} total)" },
